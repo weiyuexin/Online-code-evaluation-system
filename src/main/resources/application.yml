@@ -15,7 +15,6 @@ spring:
     path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com
     qianzui: img
     qianzui-file: file
-# mp??
 mybatis-plus:
   global-config:
     db-config:

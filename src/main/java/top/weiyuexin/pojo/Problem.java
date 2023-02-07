@@ -11,5 +11,5 @@ import lombok.Data;
  * @Date: 2023/2/7 19:03
  */
 @Data
-public class problem {
+public class Problem {
 }

@@ -1,0 +1,24 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/pns?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    username: root
+    password: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  tencent:
+    secretId: AKIDFJ6dtsb3GCrFMCl34oIWTAajcEZdRzHI
+    secretKey: lFTQ5TbSu50e17vTkjRu61e18yXprc6I
+    bucket: ap-beijing
+    bucketName: wyx-1303917755
+    path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com
+    qianzui: img
+    qianzui-file: file
+# mp??
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #????????

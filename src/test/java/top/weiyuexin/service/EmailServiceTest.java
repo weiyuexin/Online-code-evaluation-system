@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.weiyuexin.Application;
+import top.weiyuexin.pojo.vo.R;
 
 /**
  * @PackageName: top.weiyuexin.service
@@ -23,6 +24,7 @@ public class EmailServiceTest {
 
     @Test
     public void testSendEmail(){
-        emailService.send("3022422894@qq.com");
+        R send = emailService.send("3022422894@qq.com");
+        System.out.println(send);
     }
 }

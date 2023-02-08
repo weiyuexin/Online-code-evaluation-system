@@ -29,4 +29,4 @@ mybatis-plus:
     db-config:
       id-type: auto
   configuration:
-    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl  #????????
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

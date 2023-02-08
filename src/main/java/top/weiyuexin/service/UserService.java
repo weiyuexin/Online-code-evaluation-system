@@ -1,5 +1,6 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.User;
 
 /**
@@ -10,6 +11,6 @@ import top.weiyuexin.pojo.User;
  * @Email: 3022422894@qq.com
  * @Date: 2023/2/7 19:07
  */
-public interface UserService {
-    public User findById(Integer id);
+public interface UserService extends IService<User> {
+
 }

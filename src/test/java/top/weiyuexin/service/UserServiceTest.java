@@ -20,9 +20,10 @@ import top.weiyuexin.Application;
 public class UserServiceTest {
     @Autowired
     private UserService userService;
+
     @Test
     public void testFindById(){
-        System.out.println("hello ");
-        userService.findById(1);
+        System.out.println(userService.getById(34));
     }
+
 }

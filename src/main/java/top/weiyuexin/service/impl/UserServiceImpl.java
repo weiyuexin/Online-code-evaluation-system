@@ -1,6 +1,9 @@
 package top.weiyuexin.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import top.weiyuexin.mapper.UserMapper;
 import top.weiyuexin.pojo.User;
 import top.weiyuexin.service.UserService;
 
@@ -13,10 +16,7 @@ import top.weiyuexin.service.UserService;
  * @Date: 2023/2/7 19:08
  */
 @Service
-public class UserServiceImpl implements UserService {
-    @Override
-    public User findById(Integer id) {
-        System.out.println("findById");
-        return new User();
-    }
+public class UserServiceImpl extends ServiceImpl<UserMapper,User> implements UserService {
+    @Autowired
+    private UserMapper userMapper;
 }

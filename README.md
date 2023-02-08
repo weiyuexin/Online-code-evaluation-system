@@ -4,7 +4,7 @@
 
 - Java版本：Jdk 17
 
-- 数据库：MySQL 8.0
+- 数据库：MySQL 8.0、Redis 6.2.6
 
 - 开发工具 ：IntelliJ IDEA
 

@@ -7,6 +7,15 @@ spring:
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
+  data:
+    redis:
+      host: 101.43.253.15
+      port: 6379
+      password: root
+      client-name: jedis
+      jedis:
+        pool:
+          max-active: 16
   tencent:
     secretId: AKIDFJ6dtsb3GCrFMCl34oIWTAajcEZdRzHI
     secretKey: lFTQ5TbSu50e17vTkjRu61e18yXprc6I

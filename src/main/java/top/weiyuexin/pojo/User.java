@@ -20,10 +20,16 @@ public class User {
     private String password;
     private String email;
     private String sex;
-    private Integer points;
-    private String phone;
-    private String signature;
-    private Date time;
-    private String address;
+    /*个人简介*/
+    private String introduction;
+    /*头像*/
     private String photo;
+    private Integer submitNum;
+    private Integer solvedNum;
+    private Date registerTime;
+    /*最后登录时间*/
+    private Date accessTime;
+    private String ip;
+    private String school;
+    private Integer languageId;
 }

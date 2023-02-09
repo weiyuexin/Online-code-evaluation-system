@@ -7,15 +7,17 @@ spring:
     username: root
     password: root
     type: com.alibaba.druid.pool.DruidDataSource
-  data:
-    redis:
-      host: 101.43.253.15
-      port: 6379
-      password: root
-      client-name: jedis
-      jedis:
-        pool:
-          max-active: 16
+  redis:
+    host: 101.43.253.15
+    port: 6379
+    password: root
+    client-name: jedis
+    jedis:
+      pool:
+        max-active: 16
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
   tencent:
     secretId: AKIDFJ6dtsb3GCrFMCl34oIWTAajcEZdRzHI
     secretKey: lFTQ5TbSu50e17vTkjRu61e18yXprc6I
@@ -30,3 +32,4 @@ mybatis-plus:
       id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+

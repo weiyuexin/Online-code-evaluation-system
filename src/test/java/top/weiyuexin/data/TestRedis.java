@@ -28,7 +28,7 @@ public class TestRedis {
     @Test
     public void testSet(){
         ValueOperations ops = redisTemplate.opsForValue();
-        ops.set("key1","value1");
+        ops.set("key2","value1");
     }
 
     @Test

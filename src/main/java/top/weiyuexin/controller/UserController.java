@@ -1,5 +1,8 @@
 package top.weiyuexin.controller;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Controller;
@@ -15,6 +18,7 @@ import top.weiyuexin.service.UserService;
  * @Email: 3022422894@qq.com
  * @Date: 2023/2/7 21:21
  */
+
 @RestController
 @RequestMapping("/user")
 public class UserController {

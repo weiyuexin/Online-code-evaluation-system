@@ -2,17 +2,16 @@ package top.weiyuexin.mapper;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Repository;
-import top.weiyuexin.pojo.User;
+import top.weiyuexin.pojo.Solution;
 
 /**
  * @PackageName: top.weiyuexin.mapper
  * @ProjectName: Online-code-evaluation-system
- * @ClassName: UserMapper
+ * @ClassName: SolutionMapper
  * @Author: Weiyuexin
  * @Email: 3022422894@qq.com
- * @Date: 2023/2/7 19:07
+ * @Date: 2023/2/9 22:54
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
+public interface SolutionMapper extends BaseMapper<Solution> {
 }

@@ -3,7 +3,6 @@ package top.weiyuexin.pojo;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.stream.Stream;
 
 /**
  * @PackageName: top.weiyuexin.pojo
@@ -14,7 +13,7 @@ import java.util.stream.Stream;
  * @Date: 2023/2/9 9:55
  */
 @Data
-public class solution {
+public class Solution {
     private Integer id;
     private Integer userId;
     private Integer problemId;

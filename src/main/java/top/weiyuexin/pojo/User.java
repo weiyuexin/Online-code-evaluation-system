@@ -21,15 +21,15 @@ public class User {
     private String email;
     private String sex;
     /*个人简介*/
-    private String introduction;
+    //private String introduction;
     /*头像*/
     private String photo;
-    private Integer submitNum;
-    private Integer solvedNum;
-    private Date registerTime;
+   // private Integer submitNum;
+    //private Integer solvedNum;
+    //private Date registerTime;
     /*最后登录时间*/
-    private Date accessTime;
-    private String ip;
-    private String school;
-    private Integer languageId;
+    //private Date accessTime;
+    //private String ip;
+   // private String school;
+    //private Integer languageId;
 }

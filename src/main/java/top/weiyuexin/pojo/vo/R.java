@@ -37,6 +37,14 @@ public class R {
         r.setTime(System.currentTimeMillis());
         return r;
     }
+    public static R success(Object data,String msg) {
+        R r = new R();
+        r.setCode(SUCCESS_CODE);
+        r.setData(data);
+        r.setMsg(msg);
+        r.setTime(System.currentTimeMillis());
+        return r;
+    }
     //失败的方法，返回自定义错误信息 和 错误代码“-1”
     public static R error(String msg) {
         R r = new R();

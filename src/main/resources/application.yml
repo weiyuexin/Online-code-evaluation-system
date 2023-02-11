@@ -23,11 +23,12 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   tencent:
-    secretId: AKIDFJ6dtsb3GCrFMCl34oIWTAajcEZdRzHI
-    secretKey: lFTQ5TbSu50e17vTkjRu61e18yXprc6I
+    secretId: AKIDmrqa3HIiFj3xmQozwe7LK4Zp8QWN3dz5
+    secretKey: 1qlUzIOJ8j4FH7hCUX9jGcjaDblgQvQh
     bucket: ap-beijing
     bucketName: wyx-1303917755
-    path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com
+#    path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com
+    path: https://img.weiyuexin.top
     qianzui: img
     qianzui-file: file
 mybatis-plus:

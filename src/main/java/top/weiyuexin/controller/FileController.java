@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import top.weiyuexin.pojo.File;
+import top.weiyuexin.pojo.vo.R;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ public class FileController {
      */
     @PostMapping("/file/upload")
     @ResponseBody
-    public Object upload(@RequestPart("files") MultipartFile[] files) throws IOException {
+    public R upload(@RequestPart("files") MultipartFile[] files) throws IOException {
         ArrayList<File> fileList = new ArrayList<>();
         if(files.length>0){
             for (MultipartFile f : files){
@@ -65,8 +66,7 @@ public class FileController {
                     fileList.add(file);
                 }
             }
-            System.out.println(fileList);
         }
-        return fileList;
+        return R.success(fileList);
     }
 }

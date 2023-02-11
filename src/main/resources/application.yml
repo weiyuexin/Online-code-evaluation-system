@@ -37,4 +37,25 @@ mybatis-plus:
       id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+knife4j:
+  enable: true
+  basic:
+    username: root
+    password: root
+    enable: true
+  openapi:
+    title: Knife4j官方文档
+    description: "在线代码测评系统 API 文档"
+    email: 3022422894@qq.com
+    concat: YuexinWei
+    url: https://blog.weiyuexin.top
+    version: v4.0
+    license: Apache 2.0
+    license-url: https://blog.weiyuexin.top
+    terms-of-service-url: https://blog.weiyuexin.top
+    group:
+      controller:
+        group-name: 接口
+        api-rule: package
+        api-rule-resources:
+          - top.weiyuexin.controller

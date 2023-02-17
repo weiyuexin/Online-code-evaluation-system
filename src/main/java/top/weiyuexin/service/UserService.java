@@ -1,7 +1,6 @@
 package top.weiyuexin.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
-import org.springframework.stereotype.Service;
 import top.weiyuexin.pojo.User;
 
 /**

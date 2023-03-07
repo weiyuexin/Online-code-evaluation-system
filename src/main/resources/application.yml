@@ -23,8 +23,8 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   tencent:
-    secretId: AKIDmrqa3HIiFj3
-    secretKey: 1qlUzIOJ8j4FH7
+    secretId: AKIDmrqa3HIiFj3xmQozwe7LK4Zp8QWN3dz5
+    secretKey: 1qlUzIOJ8j4FH7hCUX9jGcjaDblgQvQh
     bucket: ap-beijing
     bucketName: wyx-1303917755
 #    path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com

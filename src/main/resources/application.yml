@@ -47,9 +47,9 @@ knife4j:
   basic:
     username: root
     password: root
-    enable: true
+    enable: false
   openapi:
-    title: Knife4j官方文档
+    title: 在线代码测评系统官方文档
     description: "在线代码测评系统 API 文档"
     email: 3022422894@qq.com
     concat: YuexinWei

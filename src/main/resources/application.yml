@@ -19,6 +19,11 @@ spring:
     jedis:
       pool:
         max-active: 16
+  devtools:
+    restart:
+      #设置不参与热部署的文件或文件夹
+      exclude: application.yml,static/**,public/**
+      enabled: true
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher

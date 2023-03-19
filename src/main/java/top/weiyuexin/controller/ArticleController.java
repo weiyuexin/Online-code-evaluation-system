@@ -22,7 +22,7 @@ public class ArticleController {
     @Autowired
     private ArticleService articleService;
     /**
-     * 根据id查询文字
+     * 根据id查询文章
      * @param id
      * @return
      */
@@ -57,7 +57,7 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     public R updateArticle(Article article){
         return R.success();
     }

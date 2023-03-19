@@ -75,7 +75,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
     public R updateUser(User user){
         return R.success();
     }

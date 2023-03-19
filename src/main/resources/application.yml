@@ -1,11 +1,11 @@
 server:
-  port: 8081
+  port: 8080
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/pns?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
-    password: root
+    password: weiyuexin
     type: com.alibaba.druid.pool.DruidDataSource
   servlet:
     multipart:

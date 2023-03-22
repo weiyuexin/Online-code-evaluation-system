@@ -77,7 +77,7 @@ public class UserController {
      */
     @PutMapping("/update")
     public R updateUser(User user){
-        return R.success();
+        return R.success(userService.updateById(user));
     }
 
     /**
@@ -87,6 +87,6 @@ public class UserController {
      */
     @DeleteMapping("/delete")
     public R deleteArticle(User user){
-        return R.success();
+        return R.success(userService.removeById(user));
     }
 }

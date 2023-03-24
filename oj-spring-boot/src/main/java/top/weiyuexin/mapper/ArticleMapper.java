@@ -1,6 +1,8 @@
 package top.weiyuexin.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
+import top.weiyuexin.pojo.Article;
 
 /**
  * @PackageName: top.weiyuexin.mapper
@@ -11,5 +13,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Date: 2023/2/7 21:23
  */
 @Mapper
-public interface ArticleMapper {
+public interface ArticleMapper extends BaseMapper<Article> {
 }

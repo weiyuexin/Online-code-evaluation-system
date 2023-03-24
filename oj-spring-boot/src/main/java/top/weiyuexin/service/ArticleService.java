@@ -1,5 +1,8 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
+import top.weiyuexin.pojo.Article;
+
 /**
  * @PackageName: top.weiyuexin.service
  * @ProjectName: Online-code-evaluation-system
@@ -8,5 +11,5 @@ package top.weiyuexin.service;
  * @Email: 3022422894@qq.com
  * @Date: 2023/2/7 21:26
  */
-public interface ArticleService {
+public interface ArticleService extends IService<Article> {
 }

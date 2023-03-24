@@ -28,7 +28,7 @@ public class ArticleController {
      */
     @GetMapping("/{id}")
     public R getById(@PathVariable("id") String id){
-        return R.success();
+        return R.success(articleService.getById(id));
     }
 
     /**
@@ -49,7 +49,7 @@ public class ArticleController {
      */
     @PostMapping("/add")
     public R addArticle(Article article){
-        return R.success();
+        return R.success(articleService.save(article));
     }
 
     /**
@@ -59,7 +59,7 @@ public class ArticleController {
      */
     @PutMapping("/update")
     public R updateArticle(Article article){
-        return R.success();
+        return R.success(articleService.updateById(article));
     }
 
     /**
@@ -69,6 +69,6 @@ public class ArticleController {
      */
     @DeleteMapping("/delete")
     public R deleteArticle(Article article){
-        return R.success();
+        return R.success(articleService.removeById(article));
     }
 }

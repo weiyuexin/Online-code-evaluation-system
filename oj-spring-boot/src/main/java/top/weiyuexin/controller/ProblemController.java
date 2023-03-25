@@ -32,13 +32,24 @@ public class ProblemController {
     }
 
     /**
+     * 分页查询
+     * @param start
+     * @param pageSize
+     * @return
+     */
+    @GetMapping("/list")
+    public R getPage(Integer start, Integer pageSize){
+        return R.success();
+    }
+
+    /**
      * 添加题目
      *
      * @param problem
      * @return
      */
     @PostMapping("")
-    public R add(Problem problem) {
+    public R addProblem(Problem problem) {
         return R.success(problemService.save(problem));
     }
 
@@ -48,12 +59,12 @@ public class ProblemController {
      * @return
      */
     @PutMapping("")
-    public R update(Problem problem) {
+    public R updateProblem(Problem problem) {
         return R.success(problemService.updateById(problem));
     }
 
     @DeleteMapping("")
-    public R delete(Problem problem){
+    public R deleteProblem(Problem problem){
         return R.success(problemService.removeById(problem));
     }
 

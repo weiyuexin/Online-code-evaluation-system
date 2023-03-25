@@ -40,5 +40,5 @@ public class Problem {
     /*总解决问题的次数*/
     private Integer solvedNum;
     /*所属竞赛的id*/
-    private Integer contsetId;
+    private Integer contestId;
 }

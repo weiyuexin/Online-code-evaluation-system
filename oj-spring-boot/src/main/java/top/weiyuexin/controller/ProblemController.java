@@ -1,9 +1,11 @@
 package top.weiyuexin.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.weiyuexin.pojo.Problem;
 import top.weiyuexin.pojo.vo.R;
+import top.weiyuexin.service.ProblemService;
 
 /**
  * @PackageName: top.weiyuexin.controller
@@ -16,6 +18,8 @@ import top.weiyuexin.pojo.vo.R;
 @RestController
 @RequestMapping("/problem")
 public class ProblemController {
+    @Autowired
+    private ProblemService problemService;
     /**
      * 根据id查询题目
      *
@@ -24,7 +28,7 @@ public class ProblemController {
      */
     @GetMapping("/{id}")
     public R getById(@PathVariable("id") Integer id) {
-        return R.success();
+        return R.success(problemService.getById(id));
     }
 
     /**
@@ -33,9 +37,9 @@ public class ProblemController {
      * @param problem
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("")
     public R add(Problem problem) {
-        return R.success();
+        return R.success(problemService.save(problem));
     }
 
     /**
@@ -43,14 +47,14 @@ public class ProblemController {
      * @param problem
      * @return
      */
-    @PutMapping("/update")
+    @PutMapping("")
     public R update(Problem problem) {
-        return R.success();
+        return R.success(problemService.updateById(problem));
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public R delete(Problem problem){
-        return R.success();
+        return R.success(problemService.removeById(problem));
     }
 
 }

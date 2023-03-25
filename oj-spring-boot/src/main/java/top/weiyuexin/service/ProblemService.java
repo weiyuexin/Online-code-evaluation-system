@@ -12,5 +12,5 @@ import top.weiyuexin.pojo.Problem;
  * @Email: 3022422894@qq.com
  * @Date: 2023/2/7 21:27
  */
-public interface ProblemService  {
+public interface ProblemService extends IService<Problem> {
 }

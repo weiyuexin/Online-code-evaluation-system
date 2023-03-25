@@ -47,7 +47,7 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @PostMapping("/add")
+    @PostMapping("")
     public R addArticle(Article article){
         return R.success(articleService.save(article));
     }
@@ -57,7 +57,7 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @PutMapping("/update")
+    @PutMapping("")
     public R updateArticle(Article article){
         return R.success(articleService.updateById(article));
     }
@@ -67,7 +67,7 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public R deleteArticle(Article article){
         return R.success(articleService.removeById(article));
     }

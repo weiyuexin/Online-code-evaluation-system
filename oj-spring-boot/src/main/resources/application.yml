@@ -54,7 +54,7 @@ knife4j:
     email: 3022422894@qq.com
     concat: YuexinWei
     url: https://blog.weiyuexin.top
-    version: v4.0
+    version: v4.0.2
     license: Apache 2.0
     license-url: https://blog.weiyuexin.top
     terms-of-service-url: https://blog.weiyuexin.top

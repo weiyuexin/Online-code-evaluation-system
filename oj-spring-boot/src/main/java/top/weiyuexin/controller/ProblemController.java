@@ -22,7 +22,6 @@ public class ProblemController {
     private ProblemService problemService;
     /**
      * 根据id查询题目
-     *
      * @param id
      * @return
      */
@@ -44,7 +43,6 @@ public class ProblemController {
 
     /**
      * 添加题目
-     *
      * @param problem
      * @return
      */
@@ -63,6 +61,11 @@ public class ProblemController {
         return R.success(problemService.updateById(problem));
     }
 
+    /**
+     * 删除题目
+     * @param problem
+     * @return
+     */
     @DeleteMapping("")
     public R deleteProblem(Problem problem){
         return R.success(problemService.removeById(problem));

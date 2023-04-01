@@ -2,9 +2,13 @@ package top.weiyuexin.service.impl;
 
 import cn.hutool.core.util.RandomUtil;
 import cn.hutool.extra.mail.MailUtil;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Service;
 import top.weiyuexin.pojo.vo.R;
 import top.weiyuexin.service.EmailService;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * @PackageName: top.weiyuexin.service.impl
@@ -16,6 +20,8 @@ import top.weiyuexin.service.EmailService;
  */
 @Service
 public class EmailServiceImpl implements EmailService {
+    @Autowired
+    private StringRedisTemplate redisTemplate;
     /**
      * 发送邮件
      * @param email //收件人
@@ -32,8 +38,9 @@ public class EmailServiceImpl implements EmailService {
         //调用HuTool中的发送验证码的方法，发送验证码
         try {
             MailUtil.send(email,title,emailCodeContent,false);
-            //发送成功
-            return R.success();
+            // 将验证码保存到Redis，并设置过期时间为5分钟
+            redisTemplate.opsForValue().set("emailCode:"+email, String.valueOf(emailCode),60*5, TimeUnit.SECONDS);
+            return R.success("验证码发送成功！");
         }catch (Exception e){
             //发送失败
             return R.error("发送失败，请检查邮箱是否填写正确后重试!");

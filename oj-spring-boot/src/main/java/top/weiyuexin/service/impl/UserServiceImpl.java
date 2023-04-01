@@ -34,4 +34,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         lqw.eq(User::getEmail, email).or().eq(User::getUsername, username);
         return Math.toIntExact(userMapper.selectCount(lqw));
     }
+
+    @Override
+    public User getByNameAndPassword(String username, String password) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(User::getUsername, username).eq(User::getPassword, password);
+        return userMapper.selectOne(lqw);
+    }
 }

@@ -1,6 +1,5 @@
 package top.weiyuexin.data;
 
-import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
@@ -8,11 +7,11 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.test.context.junit4.SpringRunner;
 import top.weiyuexin.Application;
 import top.weiyuexin.pojo.Article;
+import top.weiyuexin.pojo.User;
 
 import java.io.IOException;
 
@@ -29,7 +28,7 @@ import java.io.IOException;
 public class TestRedis {
     //自动装配RedisTemplate对象
     @Autowired
-    private StringRedisTemplate redisTemplate;
+    private RedisTemplate redisTemplate;
     // JSON工具
     private static final ObjectMapper mapper = new ObjectMapper();
 
@@ -43,16 +42,22 @@ public class TestRedis {
         article.setContent("测试redis");
         // 手动序列化
         String json = mapper.writeValueAsString(article);
-        ops.set("article",article);
+        ops.set("article", article);
     }
 
     @Test
     public void testGet() throws IOException {
         ValueOperations ops = redisTemplate.opsForValue(); //表明数据是key-value型的数据
-        Object articleJson = ops.get("article");
+        Article article = (Article) ops.get("article");
         //反序列化
-        Article article = mapper.readValue((JsonParser) articleJson,Article.class);
+        //Article article = mapper.readValue((JsonParser) articleJson, Article.class);
         System.out.println(article);
     }
 
+    @Test
+    public void testxlh() {
+        User user = new User();
+        user.setUsername("weeee");
+        redisTemplate.opsForValue().set("user", user);
+    }
 }

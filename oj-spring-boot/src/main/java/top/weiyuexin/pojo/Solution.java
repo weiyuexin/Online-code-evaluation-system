@@ -1,8 +1,7 @@
 package top.weiyuexin.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
-
-import java.util.Date;
 
 /**
  * @PackageName: top.weiyuexin.pojo
@@ -16,11 +15,15 @@ import java.util.Date;
 public class Solution {
     private Integer id;
     private Integer userId;
+    @TableField(exist = false)
+    private User user;
     private Integer problemId;
+    @TableField(exist = false)
+    private Problem problem;
     private String runTime;
     private String memory;
     private Integer languageId;
-    private Date submitTime;
+    private String submitTime;
     private String result;
     private Integer contest_id;
 }

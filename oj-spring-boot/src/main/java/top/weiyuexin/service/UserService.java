@@ -13,5 +13,6 @@ import top.weiyuexin.pojo.User;
  */
 
 public interface UserService extends IService<User> {
+    Integer getByEmailOrName(String email, String username);
 
 }

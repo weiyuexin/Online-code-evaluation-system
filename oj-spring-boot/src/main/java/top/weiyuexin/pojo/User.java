@@ -3,8 +3,6 @@ package top.weiyuexin.pojo;
 
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @PackageName: top.weiyuexin.pojo
  * @ProjectName: Online-code-evaluation-system
@@ -26,10 +24,11 @@ public class User {
     private String photo;
     private Integer submitNum;
     private Integer solvedNum;
-    private Date registerTime;
+    private String registerTime;
     /*最后登录时间*/
-    private Date accessTime;
+    private String accessTime;
     private String ip;
     private String school;
+    /*默认语言*/
     private Integer languageId;
 }

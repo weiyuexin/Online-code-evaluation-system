@@ -4,8 +4,6 @@ import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
-import java.util.Date;
-
 /**
  * @PackageName: top.weiyuexin.pojo
  * @ProjectName: Online-code-evaluation-system
@@ -38,7 +36,7 @@ public class Problem {
     private String source;
     /*题目上传时间*/
     @TableField("create_time")
-    private Date createTime;
+    private String createTime;
     /*时间限制*/
     @TableField("time_limit")
     private String timeLimit;

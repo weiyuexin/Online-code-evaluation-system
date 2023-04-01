@@ -1,10 +1,9 @@
 package top.weiyuexin.pojo.vo;
 
-import io.swagger.models.auth.In;
 import lombok.Data;
+import top.weiyuexin.utils.Time;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * @PackageName: top.weiyuexin.pojo.vo
@@ -35,11 +34,7 @@ public class R {
     public static R success() {
         R r = new R();
         r.setCode(SUCCESS_CODE);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 
@@ -48,11 +43,7 @@ public class R {
         R r = new R();
         r.setCode(SUCCESS_CODE);
         r.setData(data);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 
@@ -60,11 +51,7 @@ public class R {
         R r = new R();
         r.setCode(SUCCESS_CODE);
         r.setMsg(msg);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 
@@ -73,11 +60,7 @@ public class R {
         r.setCode(SUCCESS_CODE);
         r.setData(data);
         r.setMsg(msg);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 
@@ -86,11 +69,7 @@ public class R {
         R r = new R();
         r.setCode(ERROR_CODE);
         r.setMsg(msg);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 
@@ -99,11 +78,7 @@ public class R {
         R r = new R();
         r.setCode(code);
         r.setMsg(msg);
-        //当前时间毫秒数转换为日期
-        long currentTime = System.currentTimeMillis();
-        Date date = new Date(currentTime);
-        String currentDate = simpleDateFormat.format(date);
-        r.setTime(currentDate);
+        r.setTime(Time.CurrentTime());
         return r;
     }
 

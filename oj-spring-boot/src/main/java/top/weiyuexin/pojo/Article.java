@@ -1,5 +1,6 @@
 package top.weiyuexin.pojo;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.Data;
 
 /**
@@ -15,9 +16,11 @@ public class Article {
     private Integer id;
     private Integer problemId;
     private Integer authorId;
+    @TableField(exist = false)
+    private User user;
     private String title;
     private String content;
-    private Data time;
+    private String time;
     private Integer readNum;
     private Integer starNum;
     private Integer commentNum;

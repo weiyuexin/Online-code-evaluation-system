@@ -37,12 +37,12 @@ public class TestRedis {
     public void testSet() throws JsonProcessingException {
         ValueOperations ops = redisTemplate.opsForValue();
         Article article = new Article();
-        article.setId(1);
+        article.setId(3);
         article.setTitle("测试");
         article.setContent("测试redis");
         // 手动序列化
-        String json = mapper.writeValueAsString(article);
-        ops.set("article", article);
+        //String json = mapper.writeValueAsString(article);
+        ops.set("article:3", article);
     }
 
     @Test

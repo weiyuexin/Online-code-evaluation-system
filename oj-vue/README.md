@@ -1,4 +1,4 @@
-# online-code-evaluation-system-web
+# oj-vue
 
 ## Project setup
 ```

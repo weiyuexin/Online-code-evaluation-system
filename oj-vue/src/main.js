@@ -1,14 +1,13 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import App from './App.vue'
-import router from './router'
-import ElementUI from 'element-ui'
-import echarts from 'echarts'
-import 'element-ui/lib/theme-chalk/index.css'
-
-Vue.use(router)
-Vue.use(ElementUI)
-Vue.config.productionTip = false
-Vue.prototype.$echarts = echarts
+import router from './router/index'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
+import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+const app = createApp(App)
+app.use(ElementPlus)
+app.use(router)
+app.config.productionTip = false
 router.beforeEach((to, from, next) => {
     /* 路由发生变化修改页面title */
     if (to.meta.title) {
@@ -16,7 +15,7 @@ router.beforeEach((to, from, next) => {
     }
     next()
 })
-new Vue({
-    router,
-    render: h => h(App),
-}).$mount('#app')
+for (const [key, component] of Object.entries(ElementPlusIconsVue)) {
+    app.component(key, component)
+}
+app.mount('#app')

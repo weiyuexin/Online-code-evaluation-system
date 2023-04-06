@@ -10,7 +10,7 @@
 
 ### 采用技术
 - Spring Boot、MyBatis-Plus、redis
-- vue、Axios、Element UI
+- vue3、Axios、Element Plus
 
 ### 部署运行环境
 

@@ -4,10 +4,11 @@
 
 <script>
 export default {
-  name: "article",
-  data() {
-    return {};
-  }
+    // eslint-disable-next-line vue/multi-word-component-names
+    name: "Article",
+    data() {
+        return {};
+    }
 }
 </script>
 

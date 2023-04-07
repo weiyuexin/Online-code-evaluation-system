@@ -1,6 +1,8 @@
 package top.weiyuexin.service;
 
-import top.weiyuexin.pojo.User;
+import com.baomidou.mybatisplus.extension.service.IService;
+import top.weiyuexin.pojo.Code;
+import top.weiyuexin.pojo.TestCase;
 import top.weiyuexin.pojo.vo.R;
 
 /**
@@ -12,8 +14,24 @@ import top.weiyuexin.pojo.vo.R;
  * @Date: 2023/2/16 21:01
  */
 
-public interface CodeService {
-    public R runJava(String code, User user);
-    public R runCpp(String code, User user);
-    public R runPython(String code,User user);
+public interface CodeService extends IService<Code> {
+    public R compileJava(Code code);
+
+    public R runJava(Code code, TestCase testCase);
+
+    public R compileCpp(Code code);
+
+    public R runCpp(Code code, TestCase testCase);
+
+    public R compileC(Code code);
+
+    public R runC(Code code, TestCase testCase);
+
+    public R compileGolang(Code code);
+
+    public R runGolang(Code code, TestCase testCase);
+
+    public R runPython3(Code code, TestCase testCase);
+
+    public R runJavaScript(Code code, TestCase testCase);
 }

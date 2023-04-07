@@ -24,10 +24,6 @@ public class Problem {
     private String input;
     @TableField("output")
     private String output;
-    @TableField("sample_input")
-    private String sampleInput;
-    @TableField("sample_output")
-    private String sampleOutput;
     /*提示*/
     @TableField("hint")
     private String hint;

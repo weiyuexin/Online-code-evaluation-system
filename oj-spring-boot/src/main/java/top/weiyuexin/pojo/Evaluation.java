@@ -28,4 +28,5 @@ public class Evaluation {
     private Integer allTestCaseNum;
     private String error;
     private Integer isPassed; //是否通过，1---通过，0---没有通过
+    private String status; //测评状态
 }

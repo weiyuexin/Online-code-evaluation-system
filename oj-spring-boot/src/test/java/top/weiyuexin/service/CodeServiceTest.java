@@ -29,7 +29,7 @@ public class CodeServiceTest {
         code.setProblemId(2);
         code.setUserId(1);
         code.setCodePath("/data/code/java/1/uuid/main.java");
-        code.setLanguageId(3);
+        code.setLanguage("C");
         code.setCreateTime(Time.CurrentTime());
         codeService.save(code);
     }

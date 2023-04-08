@@ -73,6 +73,15 @@ public class R {
         return r;
     }
 
+    public static R error(Object data, String msg) {
+        R r = new R();
+        r.setCode(ERROR_CODE);
+        r.setMsg(msg);
+        r.setData(data);
+        r.setTime(Time.CurrentTime());
+        return r;
+    }
+
     //失败的方法，返回自定义错误信息 和 自定义错误代码
     public static R error(Integer code, String msg) {
         R r = new R();

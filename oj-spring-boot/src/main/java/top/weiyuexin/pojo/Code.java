@@ -15,12 +15,13 @@ import lombok.Data;
 public class Code {
     private Integer id;
     private Integer userId;
-    @TableField(exist = false)
-    private User user;
     private Integer problemId;
-    @TableField(exist = false)
-    private Problem problem;
     private String codePath;
     private String createTime;
-    private Integer languageId;
+    private String language;
+
+    @TableField(exist = false)
+    private User user;
+    @TableField(exist = false)
+    private Problem problem;
 }

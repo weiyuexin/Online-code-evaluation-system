@@ -8,6 +8,9 @@ import top.weiyuexin.pojo.TestCase;
 import top.weiyuexin.pojo.vo.R;
 import top.weiyuexin.service.CodeService;
 
+import java.io.*;
+import java.nio.charset.Charset;
+
 /**
  * @PackageName: top.weiyuexin.service.impl
  * @ProjectName: Online-code-evaluation-system
@@ -18,6 +21,8 @@ import top.weiyuexin.service.CodeService;
  */
 @Service
 public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements CodeService {
+    private String errorMsg = "";
+
     @Override
     public R compileJava(Code code) {
         return null;
@@ -28,6 +33,96 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         return null;
     }
 
+    /**
+     * 编译c程序，返回编译结果
+     *
+     * @param code
+     * @return
+     */
+    @Override
+    public R compileC(Code code) {
+        StringBuffer errorInfo = new StringBuffer();
+        Process p = null;
+        try {
+            //1.编译c文件
+            p = Runtime.getRuntime().exec("gcc main.c" + " -o " + "main", null, new File(code.getCodePath()));
+            // 获取进程的错误流
+            final InputStream is = p.getErrorStream();
+            // 开一个线程,读标准错误流
+            new Thread() {
+                public void run() {
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("GBK")));
+                        String line = null;
+                        while ((line = br.readLine()) != null) {
+                            if (line != null) {
+                                errorInfo.append(line + "\n");
+                            }
+                        }
+                        if (!errorInfo.toString().equals("")) {
+                            errorMsg = errorInfo.toString();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            is.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+            p.waitFor();
+            p.destroy();
+        } catch (Exception e) {
+            try {
+                p.getErrorStream().close();
+                p.getInputStream().close();
+                p.getOutputStream().close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
+        if (errorMsg.equals("")) {
+            return R.success("编译成功");
+        } else {
+            return R.error(errorMsg, "编译失败");
+        }
+    }
+
+    /**
+     * 执行c程序，返回执行结果
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
+    @Override
+    public R runC(Code code, TestCase testCase) {
+        String inputData = testCase.getInput();
+        String outputData = "";
+        try {
+            Process process = Runtime.getRuntime().exec("./main", null, new File(code.getCodePath()));
+            if (!inputData.equals("")) {
+                BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                bout.write(inputData);
+                bout.close();
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName("GBK")));
+            String line = null;
+            StringBuffer b = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                b.append(line + "\n");
+            }
+            outputData = b.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return R.success(outputData, "c程序执行成功");
+    }
+
     @Override
     public R compileCpp(Code code) {
         return null;
@@ -35,16 +130,6 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
 
     @Override
     public R runCpp(Code code, TestCase testCase) {
-        return null;
-    }
-
-    @Override
-    public R compileC(Code code) {
-        return null;
-    }
-
-    @Override
-    public R runC(Code code, TestCase testCase) {
         return null;
     }
 

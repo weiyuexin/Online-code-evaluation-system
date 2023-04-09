@@ -29,7 +29,7 @@ public class EvaluationServiceTest {
         evaluation.setUserId(1);
         evaluation.setProblemId(2);
         evaluation.setCreateTime(Time.CurrentTime());
-        evaluation.setLanguageId(3);
+        evaluation.setLanguage("C");
         evaluation.setPassedTestCaseNum(3);
         evaluation.setAllTestCaseNum(10);
         evaluation.setIsPassed(1);

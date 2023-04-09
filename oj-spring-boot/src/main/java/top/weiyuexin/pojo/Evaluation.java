@@ -21,7 +21,7 @@ public class Evaluation {
     @TableField(exist = false)
     private Problem problem;
     private String createTime;
-    private Integer languageId;
+    private String language;
     //通过的测试案例数
     private Integer passedTestCaseNum;
     //测试案例总数

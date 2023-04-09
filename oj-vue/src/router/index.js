@@ -8,6 +8,7 @@ import Blog from "@/views/oj/blog/Blog";
 import About from "@/views/oj/about/About";
 import Register from "@/views/oj/user/Register.vue";
 import Login from "@/views/oj/user/Login.vue";
+import UserPanel from "@/views/oj/user/UserPanel.vue";
 
 const routerHistory = createWebHistory()
 
@@ -80,6 +81,13 @@ const routes=[
         component: Register,
         meta:{
             title: "Register - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/user",
+        component: UserPanel,
+        meta:{
+            title: "我的 - Online Judge - Henu"
         }
     },
 ]

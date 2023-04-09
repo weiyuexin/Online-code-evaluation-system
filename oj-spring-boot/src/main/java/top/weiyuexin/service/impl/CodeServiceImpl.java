@@ -21,8 +21,6 @@ import java.nio.charset.Charset;
  */
 @Service
 public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements CodeService {
-    private String errorMsg = "";
-
     @Override
     public R compileJava(Code code) {
         return null;
@@ -42,6 +40,7 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
     @Override
     public R compileC(Code code) {
         StringBuffer errorInfo = new StringBuffer();
+        final String[] errorMsg = {""};
         Process p = null;
         try {
             //1.编译c文件
@@ -60,7 +59,7 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
                             }
                         }
                         if (!errorInfo.toString().equals("")) {
-                            errorMsg = errorInfo.toString();
+                            errorMsg[0] = errorInfo.toString();
                         }
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -84,10 +83,10 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
                 ee.printStackTrace();
             }
         }
-        if (errorMsg.equals("")) {
+        if (errorMsg[0].equals("")) {
             return R.success("编译成功");
         } else {
-            return R.error(errorMsg, "编译失败");
+            return R.error(errorMsg[0], "编译失败");
         }
     }
 

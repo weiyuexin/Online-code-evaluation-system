@@ -82,7 +82,7 @@ public class RunCodeController {
         System.out.println(r.getData());
 
         // 4、返回运行结果
-        return R.success("ok");
+        return R.success("通过");
     }
 
     /**

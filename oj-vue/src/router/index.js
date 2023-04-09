@@ -6,6 +6,8 @@ import Status from "@/views/oj/status/Status";
 import Rank from "@/views/oj/rank/Rank";
 import Blog from "@/views/oj/blog/Blog";
 import About from "@/views/oj/about/About";
+import Register from "@/views/oj/user/Register.vue";
+import Login from "@/views/oj/user/Login.vue";
 
 const routerHistory = createWebHistory()
 
@@ -64,6 +66,20 @@ const routes=[
         component: About,
         meta:{
             title: "About - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/login",
+        component: Login,
+        meta:{
+            title: "Login - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/register",
+        component: Register,
+        meta:{
+            title: "Register - Online Judge - Henu"
         }
     },
 ]

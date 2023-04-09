@@ -1,5 +1,6 @@
 <template>
     <div>
+      <el-scrollbar height="710px">
         <NavBar :active="`/problems`"></NavBar>
         <div class="content">
             <el-row>
@@ -84,6 +85,7 @@
             </el-row>
         </div>
         <Footer></Footer>
+      </el-scrollbar>
     </div>
 </template>
 

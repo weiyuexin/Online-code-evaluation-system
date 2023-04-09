@@ -12,13 +12,20 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   redis:
-    host: 101.43.253.15
+    host: 8.130.99.217
     port: 6379
-    password: root
-    client-name: jedis
-    jedis:
+    password: weiyuexin
+    lettuce:
       pool:
-        max-active: 16
+        # 最大阻塞等待时间，负数表示没有限制
+        max-wait: -1
+        # 连接池中的最大空闲连接
+        max-idle: 5
+        # 连接池中的最小空闲连接
+        min-idle: 0
+        # 连接池中最大连接数，负数表示没有限制
+        max-active: 20
+    database: 0
   devtools:
     restart:
       #设置不参与热部署的文件或文件夹
@@ -42,6 +49,14 @@ mybatis-plus:
       id-type: auto
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+config:
+  jwt:
+    # 加密密钥
+    secret: weiyuexin_henu
+    # token有效时长
+    expire: 604800
+    # header 名称
+    header: wyx
 knife4j:
   enable: true
   basic:

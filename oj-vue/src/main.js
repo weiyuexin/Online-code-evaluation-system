@@ -4,6 +4,7 @@ import router from './router/index'
 import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import * as ElementPlusIconsVue from '@element-plus/icons-vue'
+import 'font-awesome/css/font-awesome.min.css'
 const app = createApp(App)
 app.use(ElementPlus)
 app.use(router)

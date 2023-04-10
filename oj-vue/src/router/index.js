@@ -9,6 +9,7 @@ import About from "@/views/oj/about/About";
 import Register from "@/views/oj/user/Register.vue";
 import Login from "@/views/oj/user/Login.vue";
 import UserPanel from "@/views/oj/user/UserPanel.vue";
+import Problem from "@/views/oj/problem/Problem.vue";
 
 const routerHistory = createWebHistory()
 
@@ -88,6 +89,13 @@ const routes=[
         component: UserPanel,
         meta:{
             title: "我的 - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/problem",
+        component: Problem,
+        meta:{
+            title: "题目详情 - Online Judge - Henu"
         }
     },
 ]

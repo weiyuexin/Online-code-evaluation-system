@@ -21,14 +21,97 @@ import java.nio.charset.Charset;
  */
 @Service
 public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements CodeService {
+    /**
+     * 编译Java程序
+     *
+     * @param code
+     * @return
+     */
     @Override
     public R compileJava(Code code) {
-        return null;
+        StringBuffer errorInfo = new StringBuffer();
+        final String[] errorMsg = {""};
+        Process p = null;
+        try {
+            //1.编译c文件
+            p = Runtime.getRuntime().exec("javac Main.java", null, new File(code.getCodePath()));
+            // 获取进程的错误流
+            final InputStream is = p.getErrorStream();
+            // 开一个线程,读标准错误流
+            new Thread() {
+                public void run() {
+                    try {
+                        BufferedReader br = new BufferedReader(new InputStreamReader(is, Charset.forName("GBK")));
+                        String line = null;
+                        while ((line = br.readLine()) != null) {
+                            if (line != null) {
+                                errorInfo.append(line + "\n");
+                            }
+                        }
+                        if (!errorInfo.toString().equals("")) {
+                            errorMsg[0] = errorInfo.toString();
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    } finally {
+                        try {
+                            is.close();
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            }.start();
+            p.waitFor();
+            p.destroy();
+        } catch (Exception e) {
+            try {
+                p.getErrorStream().close();
+                p.getInputStream().close();
+                p.getOutputStream().close();
+            } catch (Exception ee) {
+                ee.printStackTrace();
+            }
+        }
+        if (errorMsg[0].equals("")) {
+            return R.success("编译成功");
+        } else {
+            return R.error(errorMsg[0], "编译失败");
+        }
     }
 
+    /**
+     * 运行编译好的Java程序
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
     @Override
     public R runJava(Code code, TestCase testCase) {
-        return null;
+        String inputData = testCase.getInput();
+        String outputData = "";
+        try {
+            Process process = Runtime.getRuntime().exec("java Main", null, new File(code.getCodePath()));
+            if (!inputData.equals("")) {
+                BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                bout.write(inputData);
+                bout.close();
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName("GBK")));
+            String line = null;
+            StringBuffer b = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                //b.append(line + "\n");
+                b.append(line);
+            }
+            outputData = b.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.error("Java程序执行时发送错误");
+        }
+        return R.success(outputData, "Java程序执行成功");
     }
 
     /**
@@ -113,11 +196,13 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
             String line = null;
             StringBuffer b = new StringBuffer();
             while ((line = br.readLine()) != null) {
-                b.append(line + "\n");
+                //b.append(line + "\n");
+                b.append(line);
             }
             outputData = b.toString();
         } catch (IOException e) {
             e.printStackTrace();
+            return R.error("c程序执行时发送错误");
         }
         return R.success(outputData, "c程序执行成功");
     }

@@ -1,0 +1,76 @@
+{
+  "homeInfo": {
+    "title": "首页",
+    "href": "page/welcome.html"
+  },
+  "logoInfo": {
+    "title": "ADMIN",
+    "image": "images/pns.png",
+    "href": ""
+  },
+  "menuInfo": [
+    {
+      "title": "常规管理",
+      "icon": "fa fa-address-book",
+      "href": "",
+      "target": "_self",
+      "child": [
+        {
+          "title": "主页面板",
+          "href": "page/welcome.html",
+          "icon": "fa fa-home",
+          "target": "_self"
+        },
+        {
+          "title": "用户管理",
+          "href": "page/user_manage.html",
+          "icon": "fa fa-users",
+          "target": "_self"
+        },
+        {
+          "title": "文章管理",
+          "href": "page/article_manage.html",
+          "icon": "fa fa-file-text",
+          "target": "_self"
+        },
+        {
+          "title": "资源管理",
+          "href": "page/resource_manage.html",
+          "icon": "fa fa-server",
+          "target": "_self"
+        },
+        {
+          "title": "评论管理",
+          "href": "",
+          "icon": "fa fa-calendar",
+          "target": "_self",
+          "child": [
+            {
+              "title": "文章评论",
+              "href": "page/article_comment.html",
+              "icon": "fa fa-list-alt",
+              "target": "_self"
+            },
+            {
+              "title": "资源评论",
+              "href": "page/resource_comment.html",
+              "icon": "fa fa-navicon",
+              "target": "_self"
+            }
+          ]
+        },
+        {
+          "title": "图片管理",
+          "href": "page/image_manage.html",
+          "icon": "fa fa-picture-o",
+          "target": "_self"
+        },{
+          "title": "登录日志",
+          "href": "page/login_log.html",
+          "icon": "fa fa-list-ul",
+          "target": "_self"
+        }
+      ]
+    }
+  ]
+}

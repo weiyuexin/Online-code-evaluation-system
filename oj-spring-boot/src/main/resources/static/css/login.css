@@ -1,0 +1,135 @@
+body {
+    background-image: url(https://img.weiyuexin.top/img/picgo/2023/04/09/20230409173204.jpg);
+    background-position: 14px 14px;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+.layui-input {
+    height: 45px;
+    width: 87%;
+    padding-left: 5px;
+    font-size: 16px;
+    display: inline-block;
+}
+
+.layui-btn {
+    height: 45px;
+}
+
+.captcha-input {
+    height: 45px;
+    padding-left: 5px;
+    font-size: 16px;
+}
+
+.layui-form {
+    width: 30%;
+    height: 60%;
+    margin: 0 auto;
+    margin-top: 7%;
+    padding: 15px 28px 0px;
+    background: #fff;
+    opacity: .95;
+}
+
+.layui-input-block {
+    margin-left: 0;
+}
+
+.layui-input-block a {
+    color: blue;
+    float: right;
+    line-height: 30px;
+    font-size: 14px;
+}
+
+h1 {
+    text-align: center;
+    color: #1d598e;
+}
+
+input.text {
+    text-align: center;
+    padding: 10px 20px;
+    width: 300px;
+}
+
+#canvas {
+    float: right;
+    margin-right: 4%;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.code {
+    width: 400px;
+    margin: 0 auto;
+}
+
+.input-val {
+    width: 60%;
+    height: 45px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.decrib {
+    font-size: 16px;
+}
+
+#passwordLogin, #emailLogin {
+    float: right;
+    cursor: pointer;
+}
+
+.tel-code {
+    display: inline-block;
+    width: 104px;
+    color: #fff;
+    font-size: 12px;
+    border: 1px solid #0697DA;
+    text-align: center;
+    height: 45px;
+    line-height: 45px;
+    background: #50c8b6;
+    cursor: pointer;
+    float: right;
+    margin-right: 5%;
+}
+
+.layui-input-checkCode {
+    height: 45px;
+    width: 52%;
+    padding-left: 5px;
+    font-size: 16px;
+    border: 1px solid rgba(0, 0, 0, .2);
+}
+
+.msgs1 {
+    background: #E6E6E6;
+    color: #818080;
+    border: 1px solid #CCCCCC;
+    pointer-events: none;
+    cursor: not-allowed;
+}
+
+.forget {
+    float: right;
+    margin-top: -30px;
+}
+
+.login {
+    margin: 0 auto;
+    text-align: center;
+}
+
+.login button {
+    width: 400px;
+    margin-left: 20px;
+}

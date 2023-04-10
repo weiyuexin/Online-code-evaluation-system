@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://8.130.99.217:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
     password: weiyuexin
     type: com.alibaba.druid.pool.DruidDataSource
@@ -26,6 +26,10 @@ spring:
         # 连接池中最大连接数，负数表示没有限制
         max-active: 20
     database: 0
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
   devtools:
     restart:
       #设置不参与热部署的文件或文件夹

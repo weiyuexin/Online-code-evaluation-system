@@ -32,6 +32,7 @@ public class UserController {
     private StringRedisTemplate redisTemplate;
     @Resource
     private JwtConfig jwtConfig;
+    
 
     /**
      * 根据id查询用户

@@ -456,8 +456,8 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
             outputData = b.toString();
         } catch (IOException e) {
             e.printStackTrace();
-            return R.error("GO程序执行时发送错误");
+            return R.error("JavaScript程序执行时发送错误");
         }
-        return R.success(outputData, "GO程序执行成功");
+        return R.success(outputData, "JavaScript程序执行成功");
     }
 }

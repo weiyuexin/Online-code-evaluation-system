@@ -295,9 +295,71 @@ public class RunCodeController {
      * @param code
      * @return
      */
-    @PostMapping("/python3")
-    public R runPython3(String code) {
-        return R.success();
+    @PostMapping("/python")
+    public R runPython(String code, Integer problemId, Integer userId) {
+        // 获取用户信息
+        User user = userService.getById(userId);
+        user.setSubmitNum(user.getSubmitNum() + 1);
+        // 读取题目详情
+        Problem problem = problemService.getById(problemId);
+        problem.setSubmitNum(problem.getSubmitNum() + 1);
+        // new一次判题记录
+        Evaluation evaluation = new Evaluation();
+        evaluation.setProblemId(problemId);
+        evaluation.setUserId(userId);
+        evaluation.setCreateTime(Time.CurrentTime());
+        evaluation.setLanguage("Python");
+        evaluation.setPassedTestCaseNum(0);
+
+        // 1、先将代码保存到服务器和数据库
+        String UUID = IdUtil.simpleUUID();
+        boolean b = FileUtils.WriteToFile(FilePath.PYTHON.getPath() + problemId + "/" + UUID + "/" + "main.py", code);
+        if (!b) {
+            return R.error("代码写入文件失败");
+        }
+        Code code1 = new Code();
+        code1.setCodePath(FilePath.PYTHON.getPath() + problemId + "/" + UUID + "/");
+        code1.setCreateTime(Time.CurrentTime());
+        code1.setUserId(userId);
+        code1.setProblemId(problemId);
+        code1.setLanguage("Python");
+        if (!codeService.save(code1)) {
+            return R.error("代码保存到数据库时发生错误");
+        }
+        // 3、运行代码，测试测试用例
+
+        // 获取测试用例
+        List<TestCase> testCaseList = testCaseService.getByProblemId(problemId);
+        evaluation.setAllTestCaseNum(testCaseList.size());
+
+        // 循环测试所有测试用例
+        for (int i = 0; i < testCaseList.size(); i++) {
+            R r = codeService.runPython(code1, testCaseList.get(i));
+            if (r.getCode() == 400 || !r.getData().toString().equals(testCaseList.get(i).getOutput())) {
+                evaluation.setError("测试用例未通过");
+                break;
+            }
+            // 通过的用例数加一
+            evaluation.setPassedTestCaseNum(evaluation.getPassedTestCaseNum() + 1);
+        }
+
+        // 4、判断所以测试用例是否已经全部通过
+        if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
+            evaluation.setIsPassed(1);
+            user.setSolvedNum(user.getSolvedNum() + 1);
+            problem.setSolvedNum(problem.getSolvedNum() + 1);
+
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.success("通过");
+        } else {
+            evaluation.setIsPassed(0);
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "测试用例未全部通过");
+        }
     }
 
     /**

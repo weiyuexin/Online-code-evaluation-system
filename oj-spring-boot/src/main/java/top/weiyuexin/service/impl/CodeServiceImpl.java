@@ -207,6 +207,12 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         return R.success(outputData, "c程序执行成功");
     }
 
+    /**
+     * 编译C++程序
+     *
+     * @param code
+     * @return
+     */
     @Override
     public R compileCpp(Code code) {
         StringBuffer errorInfo = new StringBuffer();
@@ -260,6 +266,13 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         }
     }
 
+    /**
+     * 运行C++程序
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
     @Override
     public R runCpp(Code code, TestCase testCase) {
         String inputData = testCase.getInput();
@@ -287,6 +300,12 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         return R.success(outputData, "C++程序执行成功");
     }
 
+    /**
+     * 编译GO程序
+     *
+     * @param code
+     * @return
+     */
     @Override
     public R compileGolang(Code code) {
         StringBuffer errorInfo = new StringBuffer();
@@ -340,6 +359,13 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         }
     }
 
+    /**
+     * 运行GO程序
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
     @Override
     public R runGolang(Code code, TestCase testCase) {
         String inputData = testCase.getInput();
@@ -367,13 +393,71 @@ public class CodeServiceImpl extends ServiceImpl<CodeMapper, Code> implements Co
         return R.success(outputData, "GO程序执行成功");
     }
 
+    /**
+     * 运行Python程序
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
     @Override
-    public R runPython3(Code code, TestCase testCase) {
-        return null;
+    public R runPython(Code code, TestCase testCase) {
+        String inputData = testCase.getInput();
+        String outputData = "";
+        try {
+            Process process = Runtime.getRuntime().exec("python3 main.py", null, new File(code.getCodePath()));
+            if (!inputData.equals("")) {
+                BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                bout.write(inputData);
+                bout.close();
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName("GBK")));
+            String line = null;
+            StringBuffer b = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                //b.append(line + "\n");
+                b.append(line);
+            }
+            outputData = b.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.error("python程序执行时发送错误");
+        }
+        return R.success(outputData, "python程序执行成功");
     }
 
+    /**
+     * 运行JavaScript程序
+     *
+     * @param code
+     * @param testCase
+     * @return
+     */
     @Override
     public R runJavaScript(Code code, TestCase testCase) {
-        return null;
+        String inputData = testCase.getInput();
+        String outputData = "";
+        try {
+            Process process = Runtime.getRuntime().exec("node main.js", null, new File(code.getCodePath()));
+            if (!inputData.equals("")) {
+                BufferedWriter bout = new BufferedWriter(new OutputStreamWriter(process.getOutputStream()));
+                bout.write(inputData);
+                bout.close();
+            }
+
+            BufferedReader br = new BufferedReader(new InputStreamReader(process.getInputStream(), Charset.forName("GBK")));
+            String line = null;
+            StringBuffer b = new StringBuffer();
+            while ((line = br.readLine()) != null) {
+                //b.append(line + "\n");
+                b.append(line);
+            }
+            outputData = b.toString();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return R.error("GO程序执行时发送错误");
+        }
+        return R.success(outputData, "GO程序执行成功");
     }
 }

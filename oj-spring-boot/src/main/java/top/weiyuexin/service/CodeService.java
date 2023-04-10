@@ -31,7 +31,7 @@ public interface CodeService extends IService<Code> {
 
     public R runGolang(Code code, TestCase testCase);
 
-    public R runPython3(Code code, TestCase testCase);
+    public R runPython(Code code, TestCase testCase);
 
     public R runJavaScript(Code code, TestCase testCase);
 }

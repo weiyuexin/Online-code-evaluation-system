@@ -45,48 +45,25 @@ export default {
   background-color: #fff;
   margin-top: 30px;
 }
-
-.el-row {
-  margin-bottom: 20px;
-
-&
-:last-child {
-  margin-bottom: 0;
-}
-
-width:
-
-100
-%
-;
-height:
-
-100
-%
-;
-}
-
 .el-col {
   border-radius: 0px;
   height: 100%;
 }
-
 .logo {
   height: 100%;
+  margin-top: 20px;
 }
-
 .logo img {
   position: relative;
   top: 13%;
   width: 22%;
   text-align: center;
 }
-
 .link {
   height: 100%;
   text-align: center;
   color: #000;
   font-size: 18px;
+  margin-top: 100px;
 }
-
 </style>

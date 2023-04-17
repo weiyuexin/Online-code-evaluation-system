@@ -30,5 +30,6 @@ public class User {
     private String ip;
     private String school;
     /*默认语言*/
-    private Integer languageId;
+    private String language;
+    private Integer isAdmin;
 }

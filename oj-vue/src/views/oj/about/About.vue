@@ -1,161 +1,153 @@
 <template>
   <div>
     <el-scrollbar height="710px">
-    <NavBar :active="`/about`"></NavBar>
-    <div class="content">
-      <el-row>
-        <el-col :span="12" class="div1">
-          <div class="div">
-            <el-row>
-              <el-col :span="24" class="div-title">
-                编译环境
-              </el-col>
+      <NavBar :active="`/about`"></NavBar>
+      <div class="content">
+        <el-row>
+          <el-col :span="12" class="div1">
+            <div class="div">
+              <el-row>
+                <el-col :span="24" class="div-title">
+                  编译环境
+                </el-col>
 
-              <el-col :span="24">
-                <el-row>
-                  <el-col :span="24">
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> C (GCC 4.8.5)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/gcc {src_path} -o {exe_path}
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> C++ (G++ 4.8.5)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/g++ {src_path} -o {exe_path}
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> Java (JDK 17.0.6)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/javac {src_path} -d {exe_dir} -encoding UTF8
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> Python3 (Python 3.6.8)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/python3 {src_path}
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> Golang (Golang 1.20.2)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/go build -o {exe_path} {src_path}
-                      </el-col>
-                    </el-row>
-                    <el-row>
-                      <el-col :span="24" class="my-language">
-                        <span>·</span> JavaScript (Node.js 16.19.1)
-                      </el-col>
-                      <el-col :span="24" class="compiler">
-                        /usr/bin/node {src_path}
-                      </el-col>
-                    </el-row>
-                  </el-col>
-                </el-row>
-              </el-col>
+                <el-col :span="24">
+                  <el-row>
+                    <el-col :span="24">
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> C (GCC 4.8.5)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/gcc {src_path} -o {exe_path}
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> C++ (G++ 4.8.5)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/g++ {src_path} -o {exe_path}
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> Java (JDK 17.0.6)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/javac {src_path} -d {exe_dir} -encoding UTF8
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> Python3 (Python 3.6.8)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/python3 {src_path}
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> Golang (Golang 1.20.2)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/go build -o {exe_path} {src_path}
+                        </el-col>
+                      </el-row>
+                      <el-row>
+                        <el-col :span="24" class="my-language">
+                          <span>·</span> JavaScript (Node.js 16.19.1)
+                        </el-col>
+                        <el-col :span="24" class="compiler">
+                          /usr/bin/node {src_path}
+                        </el-col>
+                      </el-row>
+                    </el-col>
+                  </el-row>
+                </el-col>
 
-            </el-row>
-          </div>
-        </el-col>
-        <el-col :span="12" class="div2">
-          <div class="div">
-            <el-row>
-              <el-col :span="24" class="div-title">
-                结果说明
-              </el-col>
-              <el-col :span="24" class="result">
-                <el-row class="result-list">
-                  <el-col span="24">
-                    <el-tag
-                        type="danger"
-                        effect="dark"
-                        color="red">
-                      Compile Error
-                    </el-tag> &nbsp;:&nbsp;代码编译错误。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type=""
-                        effect="dark">
-                      Partial Accepted
-                    </el-tag>&nbsp;:&nbsp;通过部分测试用例。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="#19BE6B">
-                      Accepted
-                    </el-tag>&nbsp;:&nbsp; 恭喜! 您的解题方法是正确的。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="red">
-                      Wrong Answer
-                    </el-tag>&nbsp;:&nbsp; 程序输出结果与判题程序的答案不符。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="red">
-                      Wrong Answer
-                    </el-tag>&nbsp;:&nbsp; 程序输出结果与判题程序的答案不符。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="red">
-                      Runtime Error
-                    </el-tag>&nbsp;:&nbsp; 程序异常终止。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="red">
-                      Time Limit Exceeded
-                    </el-tag>&nbsp;:&nbsp; 程序运行时间超出题目限制。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="success"
-                        effect="dark"
-                        color="red">
-                      Memory Limit Exceeded
-                    </el-tag>&nbsp;:&nbsp; 程序使用的内存超出题目限制。
-                  </el-col>
-                  <el-col span="24">
-                    <el-tag
-                        type="info"
-                        effect="dark">
-                      System Error
-                    </el-tag>&nbsp;:&nbsp; 判题机出现错误。
-                  </el-col>
-                </el-row>
-              </el-col>
-            </el-row>
-          </div>
-        </el-col>
-      </el-row>
-    </div>
-    <Footer></Footer>
-      </el-scrollbar>
+              </el-row>
+            </div>
+          </el-col>
+          <el-col :span="12" class="div2">
+            <div class="div">
+              <el-row>
+                <el-col :span="24" class="div-title">
+                  结果说明
+                </el-col>
+                <el-col :span="24" class="result">
+                  <el-row class="result-list">
+                    <el-col span="24">
+                      <el-tag
+                          type="danger"
+                          effect="dark"
+                          color="red">
+                        Compile Error
+                      </el-tag> &nbsp;:&nbsp;代码编译错误。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type=""
+                          effect="dark">
+                        Partial Accepted
+                      </el-tag>&nbsp;:&nbsp;通过部分测试用例。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="success"
+                          effect="dark"
+                          color="#19BE6B">
+                        Accepted
+                      </el-tag>&nbsp;:&nbsp; 恭喜! 您的解题方法是正确的。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="success"
+                          effect="dark"
+                          color="red">
+                        Wrong Answer
+                      </el-tag>&nbsp;:&nbsp; 程序输出结果与判题程序的答案不符。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="success"
+                          effect="dark"
+                          color="red">
+                        Runtime Error
+                      </el-tag>&nbsp;:&nbsp; 程序异常终止。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="success"
+                          effect="dark"
+                          color="red">
+                        Time Limit Exceeded
+                      </el-tag>&nbsp;:&nbsp; 程序运行时间超出题目限制。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="success"
+                          effect="dark"
+                          color="red">
+                        Memory Limit Exceeded
+                      </el-tag>&nbsp;:&nbsp; 程序使用的内存超出题目限制。
+                    </el-col>
+                    <el-col span="24">
+                      <el-tag
+                          type="info"
+                          effect="dark">
+                        System Error
+                      </el-tag>&nbsp;:&nbsp; 判题机出现错误。
+                    </el-col>
+                  </el-row>
+                </el-col>
+              </el-row>
+            </div>
+          </el-col>
+        </el-row>
+      </div>
+      <Footer></Footer>
+    </el-scrollbar>
   </div>
 
 </template>
@@ -169,7 +161,7 @@ export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "About",
   data() {
-    return {};
+    return {}
   },
   components: {
     NavBar,

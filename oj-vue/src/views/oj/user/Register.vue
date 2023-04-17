@@ -52,7 +52,7 @@
 
                 </el-col>
                 <el-col :span="6" class="github">
-                  <i class="fa fa-github" />
+                  <i class="fa fa-github"/>
                 </el-col>
               </el-row>
             </el-col>
@@ -66,9 +66,9 @@
 
 <script>
 import {ElMessage} from 'element-plus'
+import axios from "axios";
 
 export default {
-
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Register",
   data() {
@@ -84,18 +84,95 @@ export default {
   },
   components: {},
   methods: {
-    register: () => {
-      ElMessage({
-        message: '注册成功',
-        type: 'success',
+    register() {
+      if (this.user.username === "") {
+        ElMessage({
+          message: '用户名不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      if (this.user.email === "") {
+        ElMessage({
+          message: '邮箱不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      if (this.user.emailCode === "") {
+        ElMessage({
+          message: '邮箱验证码不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      if (this.user.password === "" || this.user.password1 === "") {
+        ElMessage({
+          message: '密码后确认密码不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      if (this.user.password !== this.user.password1) {
+        ElMessage({
+          message: '两次输入的密码不一致',
+          type: 'warning',
+        })
+        return
+      }
+      axios.post("/api/user/register", {
+        username: this.user.username,
+        email: this.user.email,
+        code: this.user.emailCode,
+        password: this.user.password
       })
+          .then(response => {
+            console.log(response.data)
+            if (response.data.code===200){
+              ElMessage({
+                message: '注册成功',
+                type: 'success',
+              })
+            }else {
+              ElMessage({
+                message: response.data.msg,
+                type: 'error',
+              })
+            }
+          })
+          .catch(error => {
+            ElMessage({
+              message: '注册失败',
+              type: 'warning',
+            })
+            console.log(error);
+          })
     },
-    sendEmailCode: () => {
-      ElMessage({
-        message: '邮箱验证码发送成功',
-        type: 'success',
-      })
-    }
+    sendEmailCode() {
+      if (this.user.email === "") {
+        ElMessage({
+          message: '邮箱不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      // 发送邮件验证码
+      axios.post("/api/email/send/" + this.user.email)
+          .then(response => {
+            ElMessage({
+              message: '验证码发送成功，请前往邮箱查看',
+              type: 'success',
+            })
+            console.log(response.data)
+          })
+          .catch(error => {
+            ElMessage({
+              message: '验证码发送失败，请查看邮箱输入是否正确',
+              type: 'warning',
+            })
+            console.log(error);
+          })
+    },
   },
 }
 </script>
@@ -173,11 +250,13 @@ export default {
   height: 12%;
   padding: 0px 20px;
 }
-.right .foot .toLogin{
+
+.right .foot .toLogin {
   text-align: left;
   padding-left: 3px;
 }
-.right .foot .github{
+
+.right .foot .github {
   font-size: 28px;
   padding-right: 3px;
   text-align: right;

@@ -4,11 +4,11 @@ module.exports = defineConfig({
     lintOnSave: false,/*关闭语法检查*/
     // 开启代理服务器
     devServer: {
+        port:8081,
         proxy: {
             '/api': {
-                target: 'http://localhost:8081',
+                target: 'http://8.130.99.217:8080',
                 pathRewrite: {'^/api': ''},
-                ws: true, //用于支持WebSocket
                 changeOrigin: true
             }
         }

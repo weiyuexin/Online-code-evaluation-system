@@ -36,14 +36,15 @@
             <el-col :span="24" class="foot">
               <el-row>
                 <el-col :span="9" class="toLogin">
-                  <router-link :to="`/register`" :underline="false">前往注册</router-link>|
+                  <router-link :to="`/register`" :underline="false">前往注册</router-link>
+                  |
                   <router-link :to="`/login`" :underline="false">忘记密码</router-link>
                 </el-col>
                 <el-col :span="9">
 
                 </el-col>
                 <el-col :span="6" class="github">
-                  <i class="fa fa-github" />
+                  <i class="fa fa-github"/>
                 </el-col>
               </el-row>
             </el-col>
@@ -57,7 +58,7 @@
 
 <script>
 
-
+// import axios from "axios";
 import {ElMessage} from "element-plus";
 
 export default {
@@ -67,16 +68,14 @@ export default {
     return {
       user: {
         username: "",
-        email: "",
-        emailCode: "",
         password: "",
-        password1: "",
       }
     }
   },
   components: {},
   methods: {
     login: () => {
+      console.log(this.user.username)
       ElMessage({
         message: '登录成功',
         type: 'success',
@@ -159,11 +158,13 @@ export default {
   height: 12%;
   padding: 0px 20px;
 }
-.right .foot .toLogin{
+
+.right .foot .toLogin {
   text-align: left;
   padding-left: 3px;
 }
-.right .foot .github{
+
+.right .foot .github {
   font-size: 28px;
   padding-right: 3px;
   text-align: right;

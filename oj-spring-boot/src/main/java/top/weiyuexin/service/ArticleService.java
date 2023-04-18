@@ -1,5 +1,6 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.Article;
 
@@ -12,4 +13,5 @@ import top.weiyuexin.pojo.Article;
  * @Date: 2023/2/7 21:26
  */
 public interface ArticleService extends IService<Article> {
+    IPage<Article> getPage(Integer currentPage, Integer pageSize, Article article);
 }

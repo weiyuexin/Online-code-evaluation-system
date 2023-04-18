@@ -141,7 +141,6 @@ public class RunCodeController {
         evaluation.setCreateTime(Time.CurrentTime());
         evaluation.setLanguage("C");
         evaluation.setPassedTestCaseNum(0);
-
         // 1、先将代码保存到服务器和数据库
         String UUID = IdUtil.simpleUUID();
         boolean b = FileUtils.WriteToFile(FilePath.C.getPath() + problemId + "/" + UUID + "/" + "main.c", code);
@@ -169,11 +168,9 @@ public class RunCodeController {
             return r;
         }
         // 3、运行代码，测试测试用例
-
         // 获取测试用例
         List<TestCase> testCaseList = testCaseService.getByProblemId(problemId);
         evaluation.setAllTestCaseNum(testCaseList.size());
-
         // 循环测试所有测试用例
         for (int i = 0; i < testCaseList.size(); i++) {
             r = codeService.runC(code1, testCaseList.get(i));
@@ -184,7 +181,6 @@ public class RunCodeController {
             // 通过的用例数加一
             evaluation.setPassedTestCaseNum(evaluation.getPassedTestCaseNum() + 1);
         }
-
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
             evaluation.setIsPassed(1);

@@ -31,8 +31,8 @@
                           stripe
                           style="width: 100%">
                   <el-table-column
-                      prop="id"
                       label="ID"
+                      type="index"
                       width="100">
                   </el-table-column>
                   <el-table-column
@@ -60,7 +60,7 @@
                   </el-table-column>
                   <el-table-column
                       prop="solve"
-                      label="题解">
+                      label="提交次数">
                   </el-table-column>
                   <el-table-column
                       prop="passRate"
@@ -99,12 +99,39 @@ export default {
       currentPage: 1,
       problems: [{
         id: '23',
-        title: '寻找两个正序数组的中位数',
+        title: 'A+B problem',
+        difficulty: {
+          type: 'success', label: '简单'
+        },
+        solve: 213,
+        passRate: '78%',
+        url: 'https://www.baidu.com'
+      }, {
+        id: '23',
+        title: '二进制转十进制',
+        difficulty: {
+          type: 'warning', label: '普及'
+        },
+        solve:76,
+        passRate: '57%',
+        url: 'https://www.baidu.com'
+      }, {
+        id: '23',
+        title: '单词的长度',
+        difficulty: {
+          type: 'success', label: '简单'
+        },
+        solve: 212,
+        passRate: '64%',
+        url: 'https://www.baidu.com'
+      }, {
+        id: '23',
+        title: '迷宫的最短路径',
         difficulty: {
           type: 'danger', label: '困难'
         },
-        solve: 888,
-        passRate: '88%',
+        solve: 34,
+        passRate: '12%',
         url: 'https://www.baidu.com'
       }, {
         id: '23',
@@ -112,26 +139,17 @@ export default {
         difficulty: {
           type: 'danger', label: '困难'
         },
-        solve: 888,
-        passRate: '88%',
+        solve: 55,
+        passRate: '23%',
         url: 'https://www.baidu.com'
       }, {
         id: '23',
-        title: '寻找两个正序数组的中位数',
+        title: '平面分割问题',
         difficulty: {
-          type: 'danger', label: '困难'
+          type: '', label: '提高'
         },
-        solve: 888,
-        passRate: '88%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '寻找两个正序数组的中位数',
-        difficulty: {
-          type: 'danger', label: '困难'
-        },
-        solve: 888,
-        passRate: '88%',
+        solve: 125,
+        passRate: '34%',
         url: 'https://www.baidu.com'
       },]
     };

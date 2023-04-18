@@ -17,6 +17,8 @@ public class Article {
     private Integer problemId;
     private Integer authorId;
     @TableField(exist = false)
+    private String authorName;
+    @TableField(exist = false)
     private User user;
     private String title;
     private String content;

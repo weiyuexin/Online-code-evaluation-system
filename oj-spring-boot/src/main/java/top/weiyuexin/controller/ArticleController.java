@@ -68,7 +68,7 @@ public class ArticleController {
             }
         }
         Ipage.setRecords(articles);
-        return new W(200, (int) Ipage.getTotal(), Ipage.getRecords());
+        return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
     }
 
     /**

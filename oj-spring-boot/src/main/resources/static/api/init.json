@@ -4,7 +4,7 @@
     "href": "page/welcome.html"
   },
   "logoInfo": {
-    "title": "ADMIN",
+    "title": "HENU",
     "image": "images/pns.png",
     "href": ""
   },
@@ -34,8 +34,8 @@
           "target": "_self"
         },
         {
-          "title": "资源管理",
-          "href": "page/resource_manage.html",
+          "title": "题目管理",
+          "href": "page/problem_manage.html",
           "icon": "fa fa-server",
           "target": "_self"
         },
@@ -60,11 +60,12 @@
           ]
         },
         {
-          "title": "图片管理",
-          "href": "page/image_manage.html",
+          "title": "竞赛管理",
+          "href": "page/contest_manage.html",
           "icon": "fa fa-picture-o",
           "target": "_self"
-        },{
+        },
+        {
           "title": "登录日志",
           "href": "page/login_log.html",
           "icon": "fa fa-list-ul",

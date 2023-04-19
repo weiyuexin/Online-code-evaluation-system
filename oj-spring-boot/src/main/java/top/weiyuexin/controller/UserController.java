@@ -1,16 +1,19 @@
 package top.weiyuexin.controller;
 
 import cn.hutool.crypto.digest.DigestUtil;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
 import top.weiyuexin.config.JwtConfig;
 import top.weiyuexin.pojo.User;
 import top.weiyuexin.pojo.vo.R;
+import top.weiyuexin.pojo.vo.W;
 import top.weiyuexin.service.UserService;
 import top.weiyuexin.utils.Time;
 
 import javax.annotation.Resource;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -32,7 +35,7 @@ public class UserController {
     private StringRedisTemplate redisTemplate;
     @Resource
     private JwtConfig jwtConfig;
-    
+
 
     /**
      * 根据id查询用户
@@ -49,13 +52,24 @@ public class UserController {
     /**
      * 分页查询
      *
-     * @param start
-     * @param pageSize
+     * @param page
+     * @param limit
+     * @param user
      * @return
      */
     @GetMapping("/list")
-    public R getPage(Integer start, Integer pageSize) {
-        return R.success();
+    public W getPage(@RequestParam("page") Integer page,
+                     @RequestParam("limit") Integer limit,
+                     User user) {
+        IPage<User> Ipage = userService.getPage(page, limit, user);
+        //如果当前页码值大于当前页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
+        if (page > Ipage.getPages()) {
+            Ipage = userService.getPage(page, limit, user);
+        }
+        List<User> users = Ipage.getRecords();
+
+        Ipage.setRecords(users);
+        return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
     }
 
 
@@ -154,6 +168,6 @@ public class UserController {
      */
     @DeleteMapping("/{id}")
     public R deleteUser(@PathVariable("id") Integer id) {
-        return R.success(userService.removeById(id));
+        return R.success(userService.removeById(id), "删除成功");
     }
 }

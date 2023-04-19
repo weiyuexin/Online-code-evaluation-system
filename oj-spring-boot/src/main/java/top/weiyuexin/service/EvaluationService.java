@@ -1,5 +1,6 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.Evaluation;
 
@@ -12,4 +13,5 @@ import top.weiyuexin.pojo.Evaluation;
  * @Date: 2023/4/8 1:28
  */
 public interface EvaluationService extends IService<Evaluation> {
+    IPage<Evaluation> getPage(Integer currentPage, Integer pageSize, Evaluation evaluation);
 }

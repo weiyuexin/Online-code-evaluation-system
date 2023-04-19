@@ -1,6 +1,11 @@
 package top.weiyuexin.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.weiyuexin.mapper.ProblemMapper;
 import top.weiyuexin.pojo.Problem;
@@ -16,4 +21,19 @@ import top.weiyuexin.service.ProblemService;
  */
 @Service
 public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> implements ProblemService {
+    @Autowired
+    private ProblemMapper problemMapper;
+
+    @Override
+    public IPage<Problem> getPage(Integer currentPage, Integer pageSize, Problem problem) {
+        LambdaQueryWrapper<Problem> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(Problem::getId);
+        //如果不为空，则查询
+        lqw.like(Strings.isNotEmpty(problem.getTitle()), Problem::getTitle, problem.getTitle());
+        lqw.like(Strings.isNotEmpty(problem.getDescription()), Problem::getDescription, problem.getDescription());
+        lqw.like(Strings.isNotEmpty(problem.getDifficulty()), Problem::getDifficulty, problem.getDifficulty());
+        IPage<Problem> page = new Page<>(currentPage, pageSize);
+        problemMapper.selectPage(page, lqw);
+        return page;
+    }
 }

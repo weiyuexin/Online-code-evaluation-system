@@ -40,6 +40,12 @@
           "target": "_self"
         },
         {
+          "title": "测评管理",
+          "href": "page/evaluation_manage.html",
+          "icon": "fa fa-list-ul",
+          "target": "_self"
+        },
+        {
           "title": "评论管理",
           "href": "",
           "icon": "fa fa-calendar",

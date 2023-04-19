@@ -1,6 +1,7 @@
 package top.weiyuexin.service;
 
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.Problem;
 
@@ -13,4 +14,6 @@ import top.weiyuexin.pojo.Problem;
  * @Date: 2023/2/7 21:27
  */
 public interface ProblemService extends IService<Problem> {
+
+    IPage<Problem> getPage(Integer currentPage, Integer pageSize, Problem problem);
 }

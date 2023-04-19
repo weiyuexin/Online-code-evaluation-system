@@ -1,11 +1,14 @@
 package top.weiyuexin.controller;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import top.weiyuexin.pojo.Problem;
 import top.weiyuexin.pojo.vo.R;
+import top.weiyuexin.pojo.vo.W;
 import top.weiyuexin.service.ProblemService;
+
+import java.util.List;
 
 /**
  * @PackageName: top.weiyuexin.controller
@@ -20,8 +23,10 @@ import top.weiyuexin.service.ProblemService;
 public class ProblemController {
     @Autowired
     private ProblemService problemService;
+
     /**
      * 根据id查询题目
+     *
      * @param id
      * @return
      */
@@ -32,27 +37,41 @@ public class ProblemController {
 
     /**
      * 分页查询
-     * @param start
-     * @param pageSize
+     *
+     * @param page
+     * @param limit
+     * @param problem
      * @return
      */
     @GetMapping("/list")
-    public R getPage(Integer start, Integer pageSize){
-        return R.success();
+    public W getPage(@RequestParam("page") Integer page,
+                     @RequestParam("limit") Integer limit,
+                     Problem problem) {
+        IPage<Problem> Ipage = problemService.getPage(page, limit, problem);
+        //如果当前页码值大于当前页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
+        if (page > Ipage.getPages()) {
+            Ipage = problemService.getPage(page, limit, problem);
+        }
+        List<Problem> problems = Ipage.getRecords();
+
+        Ipage.setRecords(problems);
+        return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
     }
 
     /**
      * 添加题目
+     *
      * @param problem
      * @return
      */
     @PostMapping("")
     public R addProblem(Problem problem) {
-        return R.success(problemService.save(problem));
+        return R.success();
     }
 
     /**
      * 修改题目
+     *
      * @param problem
      * @return
      */
@@ -63,11 +82,12 @@ public class ProblemController {
 
     /**
      * 删除题目
+     *
      * @param problem
      * @return
      */
     @DeleteMapping("")
-    public R deleteProblem(Problem problem){
+    public R deleteProblem(Problem problem) {
         return R.success(problemService.removeById(problem));
     }
 

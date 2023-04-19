@@ -1,7 +1,10 @@
 package top.weiyuexin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.logging.log4j.util.Strings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import top.weiyuexin.mapper.UserMapper;
@@ -25,7 +28,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
      * 判断用户名和邮箱是否已经存在
      *
      * @param email
-     * @param name
+     * @param username
      * @return
      */
     @Override
@@ -40,5 +43,18 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
         lqw.eq(User::getUsername, username).eq(User::getPassword, password);
         return userMapper.selectOne(lqw);
+    }
+
+    @Override
+    public IPage<User> getPage(Integer currentPage, Integer pageSize, User user) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(User::getId);
+        //如果username不为空，则查询
+        lqw.like(Strings.isNotEmpty(user.getUsername()), User::getUsername, user.getUsername());
+        lqw.like(Strings.isNotEmpty(user.getEmail()), User::getEmail, user.getEmail());
+        lqw.like(Strings.isNotEmpty(user.getSex()), User::getSex, user.getSex());
+        IPage<User> page = new Page<>(currentPage, pageSize);
+        userMapper.selectPage(page, lqw);
+        return page;
     }
 }

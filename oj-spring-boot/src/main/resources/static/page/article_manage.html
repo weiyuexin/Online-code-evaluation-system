@@ -24,12 +24,12 @@
                                 <input type="text" name="authorName" autocomplete="off" class="layui-input">
                             </div>
                         </div>
-                        <div class="layui-inline">
-                            <label class="layui-form-label">标签</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="type" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
+                        <!--                        <div class="layui-inline">-->
+                        <!--                            <label class="layui-form-label">标签</label>-->
+                        <!--                            <div class="layui-input-inline">-->
+                        <!--                                <input type="text" name="type" autocomplete="off" class="layui-input">-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                         <div class="layui-inline">
                             <label class="layui-form-label">标题</label>
                             <div class="layui-input-inline">
@@ -91,8 +91,8 @@
                 // {field: 'type', width: 120, title: '标签', sort: true},
                 {field: 'title', width: 200, title: '标题'},
                 {field: 'time', title: '发布时间', minWidth: 120},
-                {field: 'star', width: 100, title: '点赞数', sort: true},
-                {field: 'commentNum', width: 100, title: '评论数', sort: true},
+                //{field: 'star', width: 100, title: '点赞数', sort: true},
+                //{field: 'commentNum', width: 100, title: '评论数', sort: true},
                 {field: 'readNum', width: 100, title: '访问量', sort: true},
                 {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
             ]],
@@ -117,7 +117,7 @@
                 data.field.title = "";
             }
             param += "&authorId=" + data.field.authorName;
-            param += "&type=" + data.field.type;
+            // param += "&type=" + data.field.type;
             param += "&title=" + data.field.title;
 
             table.render({
@@ -134,11 +134,11 @@
                     {type: "checkbox", width: 50},
                     {field: 'id', width: 80, title: 'ID', sort: true},
                     {field: 'authorName', width: 120, title: '作者'},
-                    {field: 'type', width: 120, title: '标签', sort: true},
+                    // {field: 'type', width: 120, title: '标签', sort: true},
                     {field: 'title', width: 200, title: '标题'},
                     {field: 'time', title: '发布时间', minWidth: 120},
-                    {field: 'star', width: 100, title: '点赞数', sort: true},
-                    {field: 'commentNum', width: 100, title: '评论数', sort: true},
+                    // {field: 'star', width: 100, title: '点赞数', sort: true},
+                    // {field: 'commentNum', width: 100, title: '评论数', sort: true},
                     {field: 'readNum', width: 100, title: '访问量', sort: true},
                     {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
                 ]],
@@ -176,12 +176,12 @@
                     data.forEach(function (item) {
                         //向服务器发送删除指令
                         $.ajax({
-                            url: "/article/del/" + item.id,//请求地址
+                            url: "/article/" + item.id,//请求地址
                             dataType: "json",//数据格式
                             type: "DELETE",//请求方式
                             async: false,//是否异步请求
                             success: function (data) {   //如何删除成功
-                                if (data.flag) {//删除成功
+                                if (data) {//删除成功
                                     layer.msg(data.msg);
                                 } else {
                                     layer.msg(data.msg);
@@ -227,12 +227,12 @@
                     layer.close(index);
                     //向服务器发送删除指令
                     $.ajax({
-                        url: "/article/del/" + obj.data.id,//请求地址
+                        url: "/article/" + obj.data.id,//请求地址
                         dataType: "json",//数据格式
                         type: "DELETE",//请求方式
                         async: false,//是否异步请求
                         success: function (data) {   //如何删除成功
-                            if (data.flag) {//删除成功
+                            if (data) {//删除成功
                                 layer.msg(data.msg);
                             } else {
                                 layer.msg(data.msg);

@@ -16,10 +16,10 @@ public class Evaluation {
     private Integer id;
     private Integer userId;
     @TableField(exist = false)
-    private User user;
+    private String userName;
     private Integer problemId;
     @TableField(exist = false)
-    private Problem problem;
+    private String problemName;
     private String createTime;
     private String language;
     //通过的测试案例数

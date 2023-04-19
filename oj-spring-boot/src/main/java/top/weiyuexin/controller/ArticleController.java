@@ -99,8 +99,8 @@ public class ArticleController {
      * @param article
      * @return
      */
-    @DeleteMapping("")
-    public R deleteArticle(Article article) {
-        return R.success(articleService.removeById(article));
+    @DeleteMapping("/{id}")
+    public R deleteArticle(@PathVariable("id") Integer id) {
+        return R.success(articleService.removeById(id), "删除成功");
     }
 }

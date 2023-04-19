@@ -1,5 +1,6 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.User;
 
@@ -16,5 +17,7 @@ public interface UserService extends IService<User> {
     Integer getByEmailOrName(String email, String username);
 
     User getByNameAndPassword(String username, String password);
+
+    IPage<User> getPage(Integer currentPage, Integer pageSize, User user);
 
 }

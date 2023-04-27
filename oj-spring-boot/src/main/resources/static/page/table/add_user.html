@@ -19,14 +19,16 @@
     <div class="layui-form-item">
         <label class="layui-form-label required">用户名</label>
         <div class="layui-input-block">
-            <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空" placeholder="请输入用户名" value="" class="layui-input">
+            <input type="text" name="username" lay-verify="required" lay-reqtext="用户名不能为空"
+                   placeholder="请输入用户名" value="" class="layui-input">
             <tip>填写用户的昵称。</tip>
         </div>
     </div>
     <div class="layui-form-item">
         <label class="layui-form-label required">密码</label>
         <div class="layui-input-block">
-            <input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空" placeholder="请输入密码" value="" class="layui-input">
+            <input type="password" name="password" lay-verify="required" lay-reqtext="密码不能为空"
+                   placeholder="请输入密码" value="" class="layui-input">
             <tip>填写用户的密码。</tip>
         </div>
     </div>
@@ -35,12 +37,6 @@
         <div class="layui-input-block">
             <input type="radio" name="sex" value="男" title="男" checked="">
             <input type="radio" name="sex" value="女" title="女">
-        </div>
-    </div>
-    <div class="layui-form-item">
-        <label class="layui-form-label required">手机</label>
-        <div class="layui-input-block">
-            <input type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
         </div>
     </div>
     <div class="layui-form-item">
@@ -76,12 +72,11 @@
                 dataType: "json",//数据格式
                 type: "POST",//请求方式
                 async: false,//是否异步请求
-                data:{
-                    "email":email,
-                    "username":username,
-                    "password":password,
-                    "sex":sex,
-                    "phone":phone
+                data: {
+                    "email": email,
+                    "username": username,
+                    "password": password,
+                    "sex": sex,
                 },
                 success: function (data) {   //如何发送成功
                     layer.msg(data.msg);

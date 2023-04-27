@@ -18,18 +18,7 @@
             <div style="margin: 10px 10px 10px 10px">
                 <form class="layui-form layui-form-pane" action="">
                     <div class="layui-form-item">
-                        <div class="layui-inline">
-                            <label class="layui-form-label">作者</label>
-                            <div class="layui-input-inline">
-                                <input type="text" name="authorName" autocomplete="off" class="layui-input">
-                            </div>
-                        </div>
-                        <!-- <div class="layui-inline">
-                             <label class="layui-form-label">标签</label>
-                             <div class="layui-input-inline">
-                                 <input type="text" name="type" autocomplete="off" class="layui-input">
-                             </div>
-                         </div>-->
+
                         <div class="layui-inline">
                             <label class="layui-form-label">标题</label>
                             <div class="layui-input-inline">
@@ -59,7 +48,6 @@
             <img src="{{d.icon}}" lay-event="viewImg" onclick="previewImg(this)">
         </script>
         <script type="text/html" id="currentTableBar">
-            <!-- <a class="layui-btn layui-btn-warm layui-btn-xs data-count-view" lay-event="view">预览</a>-->
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
@@ -93,7 +81,7 @@
                 {field: 'describeOutput', width: 130, title: '输出描述'},
                 {field: 'input', width: 130, title: '输入样例'},
                 {field: 'output', minWidth: 130, title: '输出样例'},
-                {field: 'difficulty', title: '难度', minWidth: 120},
+                {field: 'difficulty', title: '难度', minWidth: 100},
                 {field: 'submitNum', title: '提交次数', minWidth: 100, sort: true},
                 {field: 'solvedNum', width: 100, title: '通过次数', sort: true},
                 {field: 'timeLimit', width: 100, title: '时间限制', sort: true},
@@ -166,13 +154,13 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '添加用户',
+                    title: '添加题目',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/add.html',
+                    content: '../page/table/add_problem.html',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -184,12 +172,12 @@
                     data.forEach(function (item) {
                         //向服务器发送删除指令
                         $.ajax({
-                            url: "/resource/del/" + item.id,//请求地址
+                            url: "/problem/" + item.id,//请求地址
                             dataType: "json",//数据格式
                             type: "DELETE",//请求方式
                             async: false,//是否异步请求
                             success: function (data) {   //如何删除成功
-                                if (data.flag) {//删除成功
+                                if (data.data) {//删除成功
                                     layer.msg(data.msg);
                                 } else {
                                     layer.msg(data.msg);
@@ -216,13 +204,18 @@
             if (obj.event === 'edit') {
 
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '编辑题目',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
+                    content: '../page/table/edit_problem.html',
+                    success: function (layero, index) {
+                        var iframe = window['layui-layer-iframe' + index];
+                        //调用子页面的全局函数，向子页面传递参数
+                        iframe.child(data);
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -235,12 +228,12 @@
                     layer.close(index);
                     //向服务器发送删除指令
                     $.ajax({
-                        url: "/resource/del/" + obj.data.id,//请求地址
+                        url: "/problem/" + obj.data.id,//请求地址
                         dataType: "json",//数据格式
                         type: "DELETE",//请求方式
                         async: false,//是否异步请求
                         success: function (data) {   //如何删除成功
-                            if (data.flag) {//删除成功
+                            if (data.data) {//删除成功
                                 layer.msg(data.msg);
                             } else {
                                 layer.msg(data.msg);

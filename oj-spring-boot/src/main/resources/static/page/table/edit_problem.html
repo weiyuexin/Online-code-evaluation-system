@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑题目</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">题目名</label>
+        <div class="layui-input-block">
+            <input id="title" type="text" name="title" lay-verify="required" lay-reqtext="题目名称不能为空"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">难度</label>
+        <div class="layui-input-block">
+            <select name="difficulty" lay-filter="aihao">
+                <option value="简单">简单</option>
+                <option value="中等">中等</option>
+                <option value="困难">困难</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">题目描述</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="description" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="description" name="description" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输入描述</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="describeInput" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="describeInput" name="describeInput" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输出描述</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="describeOutput" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="describeOutput" name="describeOutput" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输入样例</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="input" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="input" name="input" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输出样例</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="output" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="output" name="output" class="layui-textarea"></textarea>
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label required">时间限制</label>
+        <div class="layui-input-block">
+            <input id="timeLimit" name="timeLimit" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">内存限制</label>
+        <div class="layui-input-block">
+            <input id="memoryLimit" name="memoryLimit" value="" class="layui-input">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">提示</label>
+        <div class="layui-input-block">
+            <!--            <input type="text" name="hint" lay-verify="required" lay-reqtext="题目描述不能为空"-->
+            <!--                   value="" class="layui-input">-->
+            <textarea id="hint" name="hint" class="layui-textarea"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">题目来源</label>
+        <div class="layui-input-block">
+            <input id="source" type="text" name="source" lay-verify="required" lay-reqtext="题目描述不能为空"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <input id="id" type="text" name="id" hidden>
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认修改</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+    //接收父页面传递过来的参数
+    function child(data) {
+        $("#id").val(data.id);
+        $("#title").val(data.title);
+        $("#description").val(data.description);
+        $("#describeInput").val(data.describeInput);
+        $("#describeOutput").val(data.describeOutput);
+        $("#input").val(data.input);
+        $("#output").val(data.output);
+        $("#timeLimit").val(data.timeLimit);
+        $("#memoryLimit").val(data.memoryLimit);
+        $("#hint").val(data.hint);
+        $("#source").val(data.source);
+    }
+
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var id = $("#id").val();
+            var title = data.field.title;
+            var description = data.field.description;
+            var describeInput = data.field.describeInput;
+            var describeOutput = data.field.describeOutput;
+            var input = data.field.input;
+            var output = data.field.output;
+            var hint = data.field.hint;
+            var source = data.field.source;
+            var timeLimit = data.field.timeLimit;
+            var memoryLimit = data.field.memoryLimit;
+            var difficulty = data.field.difficulty;
+            alert(id)
+            $.ajax({
+                url: "/problem",//请求地址
+                dataType: "json",//数据格式
+                type: "PUT",//请求方式
+                async: false,//是否异步请求
+                data: {
+                    "id": id,
+                    "title": title,
+                    "description": description,
+                    "describeInput": describeInput,
+                    "describeOutput": describeOutput,
+                    "input": input,
+                    "output": output,
+                    "hint": hint,
+                    "source": source,
+                    "timeLimit": timeLimit,
+                    "memoryLimit": memoryLimit,
+                    "difficulty": difficulty,
+                },
+                success: function (data) {   //如何发送成功
+                    if (data.code === 200) {
+                        layer.msg(data.msg);
+                    } else {
+                        layer.msg("添加失败");
+                    }
+                },
+                error: function (data) {
+                    layer.msg("服务器异常，请联系管理员!");
+                }
+            })
+
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

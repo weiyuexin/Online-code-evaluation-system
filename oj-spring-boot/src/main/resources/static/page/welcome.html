@@ -113,9 +113,9 @@
                                 <h5>题目统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins ResourceCount"></h1>
+                                <h1 class="no-margins ProblemCount"></h1>
                                 <div class="stat-percent font-bold text-gray"><i class="fa fa-folder-open-o"></i> <span
-                                        class="ResourceCount"></span>
+                                        class="ProblemCount"></span>
                                 </div>
                                 <small>当前总题目数</small>
                             </div>
@@ -123,44 +123,6 @@
                     </div>
                 </div>
             </div>
-            <!--  <div class="layui-col-md2">
-                  <div class="col-xs-6 col-md-3">
-                      <div class="panel layui-bg-orange">
-                          <div class="panel-body">
-                              <div class="panel-title">
-                                  <span class="label pull-right layui-bg-green">实时</span>
-                                  <h5>文章评论统计</h5>
-                              </div>
-                              <div class="panel-content">
-                                  <h1 class="no-margins ArticleCommentCount"></h1>
-                                  <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> <span
-                                          class="ArticleCommentCount"></span>
-                                  </div>
-                                  <small>当前总文章评论数</small>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>
-              <div class="layui-col-md2">
-                  <div class="col-xs-6 col-md-3">
-                      <div class="panel layui-bg-cyan">
-                          <div class="panel-body">
-                              <div class="panel-title">
-                                  <span class="label pull-right layui-bg-red">实时</span>
-                                  <h5>资源评论统计</h5>
-                              </div>
-                              <div class="panel-content">
-                                  <h1 class="no-margins ResourceCommentCount"></h1>
-                                  <div class="stat-percent font-bold text-gray"><i class="fa fa-commenting"></i> <span
-                                          class="ResourceCommentCount"></span>
-                                  </div>
-                                  <small>当前总资源评论数</small>
-                              </div>
-                          </div>
-                      </div>
-                  </div>
-              </div>-->
             <div class="layui-col-md2">
                 <div class="col-xs-6 col-md-3">
                     <div class="panel layui-bg-red">
@@ -170,9 +132,9 @@
                                 <h5>竞赛统计</h5>
                             </div>
                             <div class="panel-content">
-                                <h1 class="no-margins imageCount"></h1>
+                                <h1 class="no-margins ContestCount"></h1>
                                 <div class="stat-percent font-bold text-gray"><i class="fa fa-file-image-o"></i> <span
-                                        class="imageCount"></span>
+                                        class="ContestCount"></span>
                                 </div>
                                 <small>当前竞赛数</small>
                             </div>
@@ -201,10 +163,8 @@
             success: function (data) {
                 $(".UserCount").html(data.data.UserCount);
                 $(".ArticleCount").html(data.data.ArticleCount);
-                $(".ResourceCount").html(data.data.ResourceCount);
-                $(".ArticleCommentCount").html(data.data.ArticleCommentCount);
-                $(".ResourceCommentCount").html(data.data.ResourceCommentCount);
-                $(".imageCount").html(data.data.ImageCount);
+                $(".ProblemCount").html(data.data.ProblemCount);
+                $(".ContestCount").html(data.data.ContestCount);
             },
             error: function (data) {
                 layer.msg("服务异常，请联系管理员");

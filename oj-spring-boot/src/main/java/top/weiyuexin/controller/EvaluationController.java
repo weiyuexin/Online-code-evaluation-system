@@ -95,6 +95,6 @@ public class EvaluationController {
      */
     @DeleteMapping("/{id}")
     public R deleteEvaluation(@PathVariable("id") Integer id) {
-        return R.success(evaluationService.removeById(id));
+        return R.success(evaluationService.removeById(id), "删除成功");
     }
 }

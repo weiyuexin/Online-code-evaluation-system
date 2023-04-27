@@ -176,12 +176,12 @@
                     data.forEach(function (item) {
                         //向服务器发送删除指令
                         $.ajax({
-                            url: "/article/" + item.id,//请求地址
+                            url: "/evaluation/" + item.id,//请求地址
                             dataType: "json",//数据格式
                             type: "DELETE",//请求方式
                             async: false,//是否异步请求
                             success: function (data) {   //如何删除成功
-                                if (data) {//删除成功
+                                if (data.data) {//删除成功
                                     layer.msg(data.msg);
                                 } else {
                                     layer.msg(data.msg);
@@ -227,12 +227,12 @@
                     layer.close(index);
                     //向服务器发送删除指令
                     $.ajax({
-                        url: "/article/" + obj.data.id,//请求地址
+                        url: "/evaluation/" + obj.data.id,//请求地址
                         dataType: "json",//数据格式
                         type: "DELETE",//请求方式
                         async: false,//是否异步请求
                         success: function (data) {   //如何删除成功
-                            if (data) {//删除成功
+                            if (data.data) {//删除成功
                                 layer.msg(data.msg);
                             } else {
                                 layer.msg(data.msg);

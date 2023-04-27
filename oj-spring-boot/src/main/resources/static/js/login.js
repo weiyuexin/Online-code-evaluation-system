@@ -16,12 +16,12 @@ $(function () {
 
             /*发送验证码请求*/
             $.ajax({
-                url: "/login.do/" + username + "/" + password,//请求地址
+                url: "/admin/login.do/" + username + "/" + password,//请求地址
                 dataType: "json",//数据格式
                 type: "GET",//请求方式
                 async: false,//是否异步请求
                 success: function (data) {   //如何发送成功
-                    if (data.flag) {//登录成功
+                    if (data.code === 200) {//登录成功
                         layer.msg(data.msg);
                         layer.msg("正在跳转到首页。。。");
                         window.setTimeout(function () {

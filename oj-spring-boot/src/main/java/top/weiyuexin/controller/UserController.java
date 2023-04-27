@@ -13,6 +13,8 @@ import top.weiyuexin.service.UserService;
 import top.weiyuexin.utils.Time;
 
 import javax.annotation.Resource;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -96,6 +98,7 @@ public class UserController {
         // 3、保存到数据库
         user.setPassword(DigestUtil.md5Hex(user.getPassword()));
         user.setRegisterTime(Time.CurrentTime());
+        user.setPhoto("https://img.weiyuexin.top/img/picgo/2023/04/27/20230427183111.png");
         if (userService.save(user)) {
             return R.success("注册成功");
         } else {
@@ -111,7 +114,7 @@ public class UserController {
      * @return
      */
     @GetMapping("/login")
-    public R login(User user, String code) {
+    public R login(User user, String code, HttpServletResponse response) {
         // 1、校验验证码是否正确
         String emailCodeInRedis = redisTemplate.opsForValue().get("emailCode:" + user.getEmail());
         if (emailCodeInRedis == null) {
@@ -129,6 +132,9 @@ public class UserController {
         // 3、将用户登录session信息保存到Redis
         String token = jwtConfig.createToken(queriedUser.getUsername());
         redisTemplate.opsForValue().set("session:" + queriedUser.getId(), token, 60 * 60 * 24 * 7, TimeUnit.SECONDS);
+        // 保存cookie
+        Cookie cookie = new Cookie("user", queriedUser.getId().toString());
+        response.addCookie(cookie);
         // 4、更新用户登录时间
         queriedUser.setAccessTime(Time.CurrentTime());
         if (!userService.updateById(queriedUser)) {
@@ -136,6 +142,7 @@ public class UserController {
         }
         return R.success("登录成功");
     }
+
 
     /**
      * 退出登录

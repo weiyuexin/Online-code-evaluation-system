@@ -46,35 +46,9 @@
           "target": "_self"
         },
         {
-          "title": "评论管理",
-          "href": "",
-          "icon": "fa fa-calendar",
-          "target": "_self",
-          "child": [
-            {
-              "title": "文章评论",
-              "href": "page/article_comment.html",
-              "icon": "fa fa-list-alt",
-              "target": "_self"
-            },
-            {
-              "title": "资源评论",
-              "href": "page/resource_comment.html",
-              "icon": "fa fa-navicon",
-              "target": "_self"
-            }
-          ]
-        },
-        {
           "title": "竞赛管理",
           "href": "page/contest_manage.html",
-          "icon": "fa fa-picture-o",
-          "target": "_self"
-        },
-        {
-          "title": "登录日志",
-          "href": "page/login_log.html",
-          "icon": "fa fa-list-ul",
+          "icon": "fa fa-window-restore",
           "target": "_self"
         }
       ]

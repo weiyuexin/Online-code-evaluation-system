@@ -18,6 +18,8 @@ public interface UserService extends IService<User> {
 
     User getByNameAndPassword(String username, String password);
 
+    User getByNameAndPasswordAndIsAdmin(String username, String password);
+
     IPage<User> getPage(Integer currentPage, Integer pageSize, User user);
 
 }

@@ -46,6 +46,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
     }
 
     @Override
+    public User getByNameAndPasswordAndIsAdmin(String username, String password) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.eq(User::getUsername, username).eq(User::getPassword, password);
+        lqw.eq(User::getIsAdmin, 1);
+        return userMapper.selectOne(lqw);
+    }
+
+    @Override
     public IPage<User> getPage(Integer currentPage, Integer pageSize, User user) {
         LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
         lqw.orderByDesc(User::getId);

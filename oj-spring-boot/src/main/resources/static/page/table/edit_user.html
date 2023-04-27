@@ -39,12 +39,6 @@
         </div>
     </div>
     <div class="layui-form-item">
-        <label class="layui-form-label required">手机</label>
-        <div class="layui-input-block">
-            <input id="phone" type="number" name="phone" lay-verify="required" lay-reqtext="手机不能为空" placeholder="请输入手机" value="" class="layui-input">
-        </div>
-    </div>
-    <div class="layui-form-item">
         <label class="layui-form-label">邮箱</label>
         <div class="layui-input-block">
             <input id="email" type="email" name="email" placeholder="请输入邮箱" value="" class="layui-input">
@@ -95,7 +89,6 @@
                     "username":username,
                     "password":password,
                     "sex":sex,
-                    "phone":phone
                 },
                 success: function (data) {   //如何发送成功
                     layer.msg(data.msg);

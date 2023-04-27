@@ -47,7 +47,7 @@
                     width="180">
                 </el-table-column>
                 <el-table-column
-                    prop="difficulty"
+                    prop="createTime"
                     label="时间">
                 </el-table-column>
                 <el-table-column
@@ -56,39 +56,36 @@
                     width="300">
                   <template v-slot="scope">
                     <el-link :href="scope.row.url" type="primary" target="_blank">{{
-                        scope.row.title
+                        scope.row.problemName
                       }}
                     </el-link>
                   </template>
                 </el-table-column>
                 <el-table-column
-                    prop="difficulty"
+                    prop="status"
                     label="状态">
-                  <template v-slot="scope">
-                    <el-tag
-                        :key="scope.row.difficulty.label"
-                        :type="scope.row.difficulty.type"
-                        effect="dark">
-                      {{ scope.row.difficulty.label }}
-                    </el-tag>
-                  </template>
                 </el-table-column>
                 <el-table-column
-                    prop="solve"
+                    prop="language"
                     label="语言">
                 </el-table-column>
                 <el-table-column
-                    prop="passRate"
+                    prop="userName"
                     label="作者">
                 </el-table-column>
               </el-table>
             </el-col>
             <el-col :span="24">
               <el-pagination
-                  class="pagination"
-                  background layout="jumper,prev, pager, next"
-                  :page-size="10"
-                  :total="100"/>
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-size="pageSize"
+                  background="true"
+                  layout="prev, pager, next"
+                  :total="total"
+                  class="fenye">
+              </el-pagination>
             </el-col>
           </el-row>
         </el-col>
@@ -101,6 +98,8 @@
 <script>
 import NavBar from "@/components/oj/common/NavBar.vue";
 import Footer from "@/components/oj/common/Footer";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -109,37 +108,59 @@ export default {
     return {
       search: '',
       currentPage: 1,
-      problems: [{
-        id: '23',
-        title: '寻找两个正序数组的中位数',
-        difficulty: {
-          type: 'danger', label: '困难'
-        },
-        solve: 888,
-        passRate: '88%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '寻找两个正序数组的中位数',
-        difficulty: {
-          type: 'danger', label: '困难'
-        },
-        solve: 888,
-        passRate: '88%',
-        url: 'https://www.baidu.com'
-      },]
+      pageSize: 10,
+      total: 0,
+      problems: []
     };
   },
   components: {
     NavBar,
     Footer
   },
+  mounted() {
+    axios.get("/api/evaluation/list?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+      if (response.data.code === 0) {
+        this.problems = response.data.data
+        this.total = response.data.count
+      }
+    }).catch(error => {
+      ElMessage({
+        message: '后端接口错误',
+        type: 'warning',
+      })
+      console.log(error);
+    })
+  },
   methods: {
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      axios.get("/api/evaluation/list?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+        if (response.data.code === 0) {
+          this.problems = response.data.data
+          this.total = response.data.count
+        }
+      }).catch(error => {
+        ElMessage({
+          message: '后端接口错误',
+          type: 'warning',
+        })
+        console.log(error);
+      })
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      axios.get("/api/evaluation/list?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+        if (response.data.code === 0) {
+          this.problems = response.data.data
+          this.total = response.data.count
+        }
+      }).catch(error => {
+        ElMessage({
+          message: '后端接口错误',
+          type: 'warning',
+        })
+        console.log(error);
+      })
     },
     goToSearch() {
       alert("搜索")
@@ -194,7 +215,10 @@ export default {
   padding-top: 10px;
   padding-left: 10px;
 }
-
+.fenye{
+  float: right;
+  padding-top: 20px;
+}
 .el-icon-search {
   cursor: pointer;
 }

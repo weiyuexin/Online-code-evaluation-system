@@ -1,5 +1,6 @@
 package top.weiyuexin.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.TestCase;
 
@@ -15,4 +16,6 @@ import java.util.List;
  */
 public interface TestCaseService extends IService<TestCase> {
     List<TestCase> getByProblemId(Integer problemId);
+
+    IPage<TestCase> getPage(Integer currentPage, Integer pageSize, TestCase testCase);
 }

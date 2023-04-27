@@ -16,7 +16,9 @@
                       placeholder="请输入用户名以搜索"
                       v-model="keyword">
                     <template #suffix>
-                      <el-icon @click="goToSearch" class="el-input__icon"><Search /></el-icon>
+                      <el-icon @click="goToSearch" class="el-input__icon">
+                        <Search/>
+                      </el-icon>
                     </template>
                   </el-input>
                 </el-col>
@@ -33,12 +35,12 @@
                     width="100">
                 </el-table-column>
                 <el-table-column
-                    prop="title"
+                    prop="username"
                     label="用户名"
                     width="200">
                   <template v-slot="scope">
                     <el-link :href="scope.row.url" type="primary" target="_blank">{{
-                        scope.row.name
+                        scope.row.username
                       }}
                     </el-link>
                   </template>
@@ -48,25 +50,36 @@
                     label="个人简介">
                 </el-table-column>
                 <el-table-column
-                    prop="submit_num"
+                    prop="submitNum"
                     label="提交次数">
                 </el-table-column>
                 <el-table-column
-                    prop="solve_num"
+                    prop="solvedNum"
                     label="通过题数">
                 </el-table-column>
                 <el-table-column
                     prop="passRate"
                     label="通过率">
+                  <template v-slot="scope">
+                    <span v-if="scope.row.submitNum===0">0</span>
+                    <span v-if="scope.row.submitNum>0">
+                      {{ ((scope.row.solvedNum / scope.row.submitNum) * 100).toFixed(2) }}%
+                    </span>
+                  </template>
                 </el-table-column>
               </el-table>
             </el-col>
             <el-col :span="24">
               <el-pagination
-                  class="pagination"
-                  background layout="jumper,prev, pager, next"
-                  :page-size="10"
-                  :total="100" />
+                  @size-change="handleSizeChange"
+                  @current-change="handleCurrentChange"
+                  :current-page="currentPage"
+                  :page-size="pageSize"
+                  background="true"
+                  layout="prev, pager, next"
+                  :total="total"
+                  class="pagination">
+              </el-pagination>
             </el-col>
           </el-row>
         </el-col>
@@ -79,77 +92,59 @@
 <script>
 import NavBar from "@/components/oj/common/NavBar.vue";
 import Footer from "@/components/oj/common/Footer";
-import { ElMessage } from 'element-plus'
+import {ElMessage} from 'element-plus'
+import axios from "axios";
+
 export default {
+
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Rank",
   data() {
     return {
       keyword: '',
       currentPage: 1,
-      rank: [{
-        id: '23',
-        name: 'weiyuexin',
-        introduction: 'hello wyyy',
-        submit_num: 899,
-        solve_num: 555,
-        passRate: '78%',
-      }, {
-        id: '2',
-        name: 'wyx',
-        introduction: '你好，我来自henu',
-        submit_num: 455,
-        solve_num: 102,
-        passRate: '25%',
-      }, {
-        id: '8',
-        name: 'www',
-        introduction: 'hello,vue',
-        submit_num: 100,
-        solve_num: 12,
-        passRate: '12%',
-      }, {
-        id: '17',
-        name: '网易嗡嗡嗡',
-        introduction: '阿三发射点回复',
-        submit_num: 40,
-        solve_num: 15,
-        passRate: '35%',
-      }, {
-        id: '2',
-        name: 'wyx',
-        introduction: '你好，我来自henu',
-        submit_num: 455,
-        solve_num: 102,
-        passRate: '25%',
-      }, {
-          id: '17',
-          name: '网易嗡嗡嗡',
-          introduction: '阿三发射点回复',
-          submit_num: 40,
-          solve_num: 15,
-          passRate: '35%',
-        },]
+      pageSize: 10,
+      total: 0,
+      rank: []
     };
   },
   components: {
     NavBar,
     Footer
   },
+  mounted() {
+    this.getPage()
+  },
   methods: {
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getPage()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.getPage()
+    },
+    getPage() {
+      axios.get("/api/user/rank?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+        if (response.data.code === 0) {
+          this.rank = response.data.data
+          this.total = response.data.count
+        }
+      }).catch(error => {
+        ElMessage({
+          message: '后端接口错误',
+          type: 'warning',
+        })
+        console.log(error);
+      })
     },
     goToSearch() {
-      if (this.keyword===""){
+      if (this.keyword === "") {
         ElMessage({
           message: '请输入关键字',
           type: 'warning',
         })
-      }else {
+      } else {
         //进行搜索
       }
     }

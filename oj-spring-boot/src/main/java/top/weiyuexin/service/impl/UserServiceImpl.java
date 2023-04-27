@@ -65,4 +65,26 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         userMapper.selectPage(page, lqw);
         return page;
     }
+
+    /**
+     * 按照解决题数进行排序
+     *
+     * @param currentPage
+     * @param pageSize
+     * @param user
+     * @return
+     */
+    @Override
+    public IPage<User> rank(Integer currentPage, Integer pageSize, User user) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(User::getSolvedNum);
+        //如果username不为空，则查询
+        lqw.like(Strings.isNotEmpty(user.getUsername()), User::getUsername, user.getUsername());
+        lqw.like(Strings.isNotEmpty(user.getEmail()), User::getEmail, user.getEmail());
+        lqw.like(Strings.isNotEmpty(user.getSex()), User::getSex, user.getSex());
+        lqw.like(User::getIsAdmin, 0);
+        IPage<User> page = new Page<>(currentPage, pageSize);
+        userMapper.selectPage(page, lqw);
+        return page;
+    }
 }

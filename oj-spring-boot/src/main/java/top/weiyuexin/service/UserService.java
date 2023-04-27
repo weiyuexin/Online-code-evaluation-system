@@ -22,4 +22,6 @@ public interface UserService extends IService<User> {
 
     IPage<User> getPage(Integer currentPage, Integer pageSize, User user);
 
+    IPage<User> rank(Integer currentPage, Integer pageSize, User user);
+
 }

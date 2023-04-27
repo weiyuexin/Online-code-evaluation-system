@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>编辑测评用例</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输入</label>
+        <div class="layui-input-block">
+            <input type="text" name="input" lay-verify="required" lay-reqtext="输入不能为空"
+                   value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">输出</label>
+        <div class="layui-input-block">
+            <input type="text" name="output" value="" class="layui-input" lay-verify="required"
+                   lay-reqtext="输出不能为空">
+        </div>
+    </div>
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认添加</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+
+    function child(data1) {
+        var id = data1;
+        console.log(id)
+        layui.use(['form'], function () {
+            var form = layui.form,
+                layer = layui.layer,
+                $ = layui.$;
+
+            //监听提交
+            form.on('submit(saveBtn)', function (data) {
+                var input = data.field.input;
+                var output = data.field.output;
+
+                $.ajax({
+                    url: "/testcase/",//请求地址
+                    dataType: "json",//数据格式
+                    type: "POST",//请求方式
+                    async: false,//是否异步请求
+                    data: {
+                        "problemId": id,
+                        "input": input,
+                        "output": output,
+                    },
+                    success: function (data) {   //如何发送成功
+                        layer.msg(data.msg);
+                    },
+                    error: function (data) {
+                        layer.msg("服务器异常，请联系管理员!");
+                    }
+                })
+
+                return false;
+            });
+
+        });
+    }
+
+
+</script>
+</body>
+</html>

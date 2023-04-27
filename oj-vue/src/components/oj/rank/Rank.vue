@@ -65,43 +65,13 @@ export default {
         submit_num: 100,
         solve_num: 12,
         passRate: '12%',
-      }, {
-        id: '17',
-        name: '网易嗡嗡嗡',
-        introduction: '阿三发射点回复',
-        submit_num: 40,
-        solve_num: 15,
-        passRate: '35%',
-      }, {
-        id: '2',
-        name: 'wyx',
-        introduction: '你好，我来自henu',
-        submit_num: 455,
-        solve_num: 102,
-        passRate: '25%',
-      }, {
-        id: '17',
-        name: '网易嗡嗡嗡',
-        introduction: '阿三发射点回复',
-        submit_num: 40,
-        solve_num: 15,
-        passRate: '35%',
-      },{
-        id: '23',
-        name: 'weiyuexin',
-        introduction: 'hello wyyy',
-        submit_num: 899,
-        solve_num: 555,
-        passRate: '78%',
-      },{
-        id: '23',
-        name: 'weiyuexin',
-        introduction: 'hello wyyy',
-        submit_num: 899,
-        solve_num: 555,
-        passRate: '78%',
-      },]
+      } ]
     };
+  },
+  methods:{
+    getIndexRank(){
+
+    }
   }
 }
 </script>

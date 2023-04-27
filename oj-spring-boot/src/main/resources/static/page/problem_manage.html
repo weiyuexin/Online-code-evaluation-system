@@ -49,6 +49,7 @@
         </script>
         <script type="text/html" id="currentTableBar">
             <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-warm layui-btn-xs data-count-edit" lay-event="test_case">测试用例管理</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -86,7 +87,7 @@
                 {field: 'solvedNum', width: 100, title: '通过次数', sort: true},
                 {field: 'timeLimit', width: 100, title: '时间限制', sort: true},
                 {field: 'memoryLimit', width: 100, title: '内存限制', sort: true},
-                {title: '操作', minWidth: 150, toolbar: '#currentTableBar', align: "center"}
+                {title: '操作', minWidth: 250, toolbar: '#currentTableBar', align: "center"}
             ]],
             limit: 10,
             page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
@@ -245,8 +246,25 @@
                     });
 
                 });
-            } else if (obj.event === 'view') {
-                window.open("http://pns.weiyuexin.top/resource/" + obj.data.id);
+            } else if (obj.event === 'test_case') {
+                var index = layer.open({
+                    title: '测试用例管理',
+                    type: 2,
+                    shade: 0.2,
+                    maxmin: true,
+                    shadeClose: true,
+                    area: ['100%', '100%'],
+                    content: '../page/test_case_manage.html',
+                    success: function (layero, index) {
+                        var iframe = window['layui-layer-iframe' + index];
+                        //调用子页面的全局函数，向子页面传递参数
+                        iframe.child(data);
+                    }
+                });
+                $(window).on("resize", function () {
+                    layer.full(index);
+                });
+                return false;
             }
         });
     });

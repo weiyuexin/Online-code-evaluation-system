@@ -54,26 +54,41 @@
                           :key="scope.row.difficulty.label"
                           :type="scope.row.difficulty.type"
                           effect="dark">
-                        {{ scope.row.difficulty.label }}
+                        {{ scope.row.difficulty }}
                       </el-tag>
                     </template>
                   </el-table-column>
                   <el-table-column
-                      prop="solve"
+                      prop="submitNum"
                       label="提交次数">
+                  </el-table-column>
+                  <el-table-column
+                      prop="solvedNum"
+                      label="通过次数">
                   </el-table-column>
                   <el-table-column
                       prop="passRate"
                       label="通过率">
+                    <template v-slot="scope">
+                      <span v-if="scope.row.submitNum===0">0</span>
+                      <span v-if="scope.row.submitNum>0">
+                      {{ ((scope.row.solvedNum / scope.row.submitNum) * 100).toFixed(2) }}%
+                    </span>
+                    </template>
                   </el-table-column>
                 </el-table>
               </el-col>
               <el-col :span="24">
                 <el-pagination
-                    class="pagination"
-                    background layout="jumper,prev, pager, next"
-                    :page-size="10"
-                    :total="100"/>
+                    @size-change="handleSizeChange"
+                    @current-change="handleCurrentChange"
+                    :current-page="currentPage"
+                    :page-size="pageSize"
+                    background="true"
+                    layout="prev, pager, next"
+                    :total="total"
+                    class="pagination">
+                </el-pagination>
               </el-col>
             </el-row>
           </el-col>
@@ -90,6 +105,8 @@
 <script>
 import NavBar from "@/components/oj/common/NavBar.vue";
 import Footer from "@/components/oj/common/Footer";
+import axios from "axios";
+import {ElMessage} from "element-plus";
 
 export default {
   name: "ProblemList",
@@ -97,79 +114,46 @@ export default {
     return {
       search: '',
       currentPage: 1,
-      problems: [{
-        id: '23',
-        title: 'A+B problem',
-        difficulty: {
-          type: 'success', label: '简单'
-        },
-        solve: 213,
-        passRate: '78%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '二进制转十进制',
-        difficulty: {
-          type: 'warning', label: '普及'
-        },
-        solve:76,
-        passRate: '57%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '单词的长度',
-        difficulty: {
-          type: 'success', label: '简单'
-        },
-        solve: 212,
-        passRate: '64%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '迷宫的最短路径',
-        difficulty: {
-          type: 'danger', label: '困难'
-        },
-        solve: 34,
-        passRate: '12%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '寻找两个正序数组的中位数',
-        difficulty: {
-          type: 'danger', label: '困难'
-        },
-        solve: 55,
-        passRate: '23%',
-        url: 'https://www.baidu.com'
-      }, {
-        id: '23',
-        title: '平面分割问题',
-        difficulty: {
-          type: '', label: '提高'
-        },
-        solve: 125,
-        passRate: '34%',
-        url: 'https://www.baidu.com'
-      },]
+      pageSize: 10,
+      total: 0,
+      problems: []
     };
   },
   components: {
     NavBar,
     Footer
   },
+  mounted() {
+    this.getPage()
+  },
   methods: {
     created() {
       document.title = '这是标题';
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      this.getPage()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val;
+      this.getPage()
     },
     goToSearch() {
       alert("搜索")
+    },
+    getPage(){
+      axios.get("/api/problem/list?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+        if (response.data.code === 0) {
+          this.problems = response.data.data
+          this.total = response.data.count
+        }
+      }).catch(error => {
+        ElMessage({
+          message: '后端接口错误',
+          type: 'warning',
+        })
+        console.log(error);
+      })
     }
   },
 }

@@ -74,6 +74,21 @@ public class UserController {
         return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
     }
 
+    @GetMapping("/rank")
+    public W rank(@RequestParam("page") Integer page,
+                  @RequestParam("limit") Integer limit,
+                  User user) {
+        IPage<User> Ipage = userService.rank(page, limit, user);
+        //如果当前页码值大于当前页码值，那么重新执行查询操作，使用最大页码值作为当前页码值
+        if (page > Ipage.getPages()) {
+            Ipage = userService.getPage(page, limit, user);
+        }
+        List<User> users = Ipage.getRecords();
+
+        Ipage.setRecords(users);
+        return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
+    }
+
 
     /**
      * @param user 用户信息
@@ -96,6 +111,7 @@ public class UserController {
         }
 
         // 3、保存到数据库
+        user.setIntroduction("暂无介绍");
         user.setPassword(DigestUtil.md5Hex(user.getPassword()));
         user.setRegisterTime(Time.CurrentTime());
         user.setPhoto("https://img.weiyuexin.top/img/picgo/2023/04/27/20230427183111.png");

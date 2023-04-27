@@ -10,6 +10,7 @@ import Register from "@/views/oj/user/Register.vue";
 import Login from "@/views/oj/user/Login.vue";
 import UserPanel from "@/views/oj/user/UserPanel.vue";
 import Problem from "@/views/oj/problem/Problem.vue";
+import EditArticle from "@/views/oj/article/EditArticle.vue";
 
 const routerHistory = createWebHistory()
 
@@ -96,6 +97,13 @@ const routes=[
         component: Problem,
         meta:{
             title: "题目详情 - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/article/edit",
+        component: EditArticle,
+        meta:{
+            title: "编辑文章 - Online Judge - Henu"
         }
     },
 ]

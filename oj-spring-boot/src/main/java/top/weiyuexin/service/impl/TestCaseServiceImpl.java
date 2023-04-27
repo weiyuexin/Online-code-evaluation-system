@@ -1,6 +1,8 @@
 package top.weiyuexin.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +36,15 @@ public class TestCaseServiceImpl extends ServiceImpl<TestCaseMapper, TestCase> i
         LambdaQueryWrapper<TestCase> lqw = new LambdaQueryWrapper<>();
         lqw.eq(TestCase::getProblemId, problemId);
         return testCaseMapper.selectList(lqw);
+    }
+
+    @Override
+    public IPage<TestCase> getPage(Integer currentPage, Integer pageSize, TestCase testCase) {
+        LambdaQueryWrapper<TestCase> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(TestCase::getId);
+        lqw.like(TestCase::getProblemId, testCase.getProblemId());
+        IPage<TestCase> page = new Page<>(currentPage, pageSize);
+        testCaseMapper.selectPage(page, lqw);
+        return page;
     }
 }

@@ -11,6 +11,8 @@ import top.weiyuexin.mapper.ProblemMapper;
 import top.weiyuexin.pojo.Problem;
 import top.weiyuexin.service.ProblemService;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service.impl
  * @ProjectName: Online-code-evaluation-system
@@ -35,5 +37,19 @@ public class ProblemServiceImpl extends ServiceImpl<ProblemMapper, Problem> impl
         IPage<Problem> page = new Page<>(currentPage, pageSize);
         problemMapper.selectPage(page, lqw);
         return page;
+    }
+
+    /**
+     * 获取首页题目排行
+     *
+     * @return
+     */
+    @Override
+    public List<Problem> hotProblems(Integer num) {
+        LambdaQueryWrapper<Problem> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(Problem::getSubmitNum);
+        lqw.last("limit " + num);
+        List<Problem> problems = problemMapper.selectList(lqw);
+        return problems;
     }
 }

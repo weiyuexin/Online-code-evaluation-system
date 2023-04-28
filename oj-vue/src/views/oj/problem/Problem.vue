@@ -5,18 +5,24 @@
       <div class="my-split">
         <Split v-model="split1">
           <template #left>
-            <div class="demo-split-pane">
-              <el-menu
-                  :default-active="activeIndex"
-                  class="el-menu-demo"
-                  mode="horizontal"
-                  @select="handleSelect"
-              >
-                <el-menu-item index="1">题目描述</el-menu-item>
-                <el-menu-item index="2">评论</el-menu-item>
-                <el-menu-item index="3">提交记录</el-menu-item>
-              </el-menu>
-            </div>
+            <el-scrollbar height="640px">
+              <div class="demo-split-pane problemDetail">
+                <el-row>
+                  <el-col :span="24" class="title">{{ problem.title }}</el-col>
+                  <el-col :span="24" class="t">题目描述</el-col>
+                  <el-col :span="24" class="v">{{ problem.description }}</el-col>
+                  <el-col :span="24" class="t">输入描述</el-col>
+                  <el-col :span="24" class="v">{{ problem.describeInput }}</el-col>
+                  <el-col :span="24" class="t">输出描述</el-col>
+                  <el-col :span="24" class="v">{{ problem.describeOutput }}</el-col>
+                  <el-col :span="24" class="t">输入样例</el-col>
+                  <el-col :span="8" class="v c">{{ problem.input }}</el-col>
+                  <el-col :span="24" class="t">输出样例</el-col>
+                  <el-col :span="8" class="v c">{{ problem.output }}</el-col>
+                </el-row>
+
+              </div>
+            </el-scrollbar>
           </template>
           <template #right>
             <div class="demo-split-pane no-padding">
@@ -73,9 +79,10 @@
                 <template #bottom>
                   <div class="demo-split-pane">
                     <el-row>
-                      <el-col :span="20"></el-col>
+                      <el-col :span="20" class="status">{{ status }}</el-col>
                       <el-col :span="4" class="my-btn">
-                        <el-button type="success" @click="submit" class="submit">提&nbsp;&nbsp;&nbsp;&nbsp;交</el-button>
+                        <el-button type="success" @click="submit" class="submit">提&nbsp;&nbsp;&nbsp;&nbsp;交
+                        </el-button>
                       </el-col>
                     </el-row>
                   </div>
@@ -99,6 +106,9 @@ import {highlight, languages} from "prismjs/components/prism-core";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism-tomorrow.css";
+import axios from "axios";
+import qs from "qs";
+import Cookies from "js-cookie";
 
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
@@ -110,7 +120,8 @@ export default {
       activeIndex: '1',
       language: "C",
       theme: "暗夜",
-      code: 'package main\n\nimport "fmt"\n\nfunc main() {\n	fmt.Println("hello golang")\n	var a, b int\n	//fmt.Scanf("%d %d", &a, &b)\n	fmt.Println("a+b=", a+b)\n}\npackage main\n\nimport "fmt"\n\nfunc main() {\n	fmt.Println("hello golang")\n	var a, b int\n	//fmt.Scanf("%d %d", &a, &b)\n	fmt.Println("a+b=", a+b)\n}\npackage main\n\nimport "fmt"\n\nfunc main() {\n	fmt.Println("hello golang")\n	var a, b int\n	//fmt.Scanf("%d %d", &a, &b)\n	fmt.Println("a+b=", a+b)\n}\n',
+      code: '',
+      problemId: 0,
       languages: [
         {
           value: 'C',
@@ -146,16 +157,43 @@ export default {
           value: '日光灯',
           label: '日光灯',
         }
-      ]
+      ],
+      problem: {},
+      user: {},
+      status: ""
     };
   },
   components: {
     NavBar,
     PrismEditor
   },
+  mounted() {
+    this.problemId = this.$route.params.id
+    this.getProblem()
+  },
   methods: {
     highlighter(code) {
       return highlight(code, languages.js);
+    },
+    getUser() {
+      // console.log(JSON.parse(Cookies.get('user'))!==null)
+      //const user = JSON.parse(Cookies.get('user'))
+      const user = Cookies.get('user')
+      this.user = JSON.parse(user)
+    },
+    getProblem() {
+      axios.get("/api/problem/" + this.problemId)
+          .then(response => {
+            this.problem = response.data.data
+            console.log(this.problem)
+          })
+          .catch(error => {
+            ElMessage({
+              message: '获取题目信息失败',
+              type: 'warning',
+            })
+            console.log(error);
+          })
     },
     RefreshCode() {
       ElMessageBox.confirm(
@@ -181,11 +219,179 @@ export default {
             })
           })
     },
-    submit(){
-      ElMessage({
-        type: 'success',
-        message: '提交成功',
+    submit() {
+      this.getUser()
+      if (JSON.stringify(this.user) === '{}') {
+        ElMessage({
+          type: 'info',
+          message: '请先登录',
+        })
+        return
+      }
+      if (this.code === "") {
+        ElMessage({
+          type: 'error',
+          message: '代码不能为空',
+        })
+        return
+      }
+      let postData = qs.stringify({
+        code: this.code,
+        problemId: this.problemId,
+        userId: this.user.id
       })
+      switch (this.language) {
+        case "C":
+          console.log(this.user)
+          axios.post("/api/code/c", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              });
+          break
+        case "C++":
+          console.log(this.user)
+          axios.post("/api/code/cpp", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              })
+              break
+        case "Java":
+          console.log(this.user)
+          axios.post("/api/code/java", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              })
+          break
+        case "Python3":
+          console.log(this.user)
+          axios.post("/api/code/python", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              })
+          break
+        case "Golang":
+          console.log(this.user)
+          axios.post("/api/code/go", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              })
+          break
+        case "JavaScript":
+          console.log(this.user)
+          axios.post("/api/code/js", postData)
+              .then(response => {
+                this.status = response.data.data.status
+                if (response.data.code === 200) {
+                  ElMessage({
+                    message: '通过',
+                    type: 'success',
+                  })
+                } else {
+                  ElMessage({
+                    message: response.data.msg,
+                    type: 'warning',
+                  })
+                }
+              })
+              .catch(error => {
+                ElMessage({
+                  message: '提交失败',
+                  type: 'warning',
+                })
+                console.log(error);
+              })
+              break
+      }
     }
   }
 }
@@ -195,7 +401,7 @@ export default {
 .split {
   height: 100%;
   /*height: 650px;*/
-  /*border: 1px solid #dcdee2;*/
+  background-color: #FFFFFF;
 }
 
 .my-split {
@@ -204,6 +410,44 @@ export default {
   border: 1px solid #dcdee2;
 }
 
+.problemDetail {
+  padding: 10px 20px !important;
+
+}
+
+.status {
+  float: left;
+  text-align: left;
+  font-size: 20px;
+  padding-left: 20px;
+  padding-top: 10px;
+}
+
+.title {
+  float: left;
+  text-align: left;
+  font-size: 25px;
+}
+
+.t {
+  float: left;
+  text-align: left;
+  line-height: 50px;
+  color: #3091f2;
+  font-size: 18px;
+}
+
+.v {
+  padding-left: 20px;
+  text-align: left;
+  float: left;
+}
+
+.c {
+  background-color: #f1f1f1;
+  padding: 10px;
+  border: 1px dashed #e9eaec;
+}
 
 .demo-split-pane {
   padding: 1px;
@@ -260,10 +504,12 @@ export default {
 .height-300 {
   height: 460px;
 }
-.my-btn{
- padding-top: 80px;
+
+.my-btn {
+  padding-top: 80px;
 }
-.my-btn .submit{
+
+.my-btn .submit {
   width: 80px;
 }
 </style>

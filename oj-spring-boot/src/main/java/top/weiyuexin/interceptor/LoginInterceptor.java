@@ -19,7 +19,9 @@ public class LoginInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
 
         //未登录，跳转到登录页
-//        response.sendRedirect("/login");
+        if (request.getCookies() == null || true) {
+            response.sendRedirect("/login");
+        }
         return false;
     }
 

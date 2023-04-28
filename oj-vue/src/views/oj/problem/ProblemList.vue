@@ -40,10 +40,10 @@
                       label="题目"
                       width="300">
                     <template v-slot="scope">
-                      <el-link :href="scope.row.url" type="primary" target="_blank">{{
+                      <router-link :to="{ name: 'problem', params: { id: scope.row.id } }"><el-link :href="scope.row.url" type="primary" target="_blank">{{
                           scope.row.title
                         }}
-                      </el-link>
+                      </el-link></router-link>
                     </template>
                   </el-table-column>
                   <el-table-column

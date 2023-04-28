@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.Problem;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service
  * @ProjectName: Online-code-evaluation-system
@@ -16,4 +18,6 @@ import top.weiyuexin.pojo.Problem;
 public interface ProblemService extends IService<Problem> {
 
     IPage<Problem> getPage(Integer currentPage, Integer pageSize, Problem problem);
+
+    List<Problem> hotProblems(Integer num);
 }

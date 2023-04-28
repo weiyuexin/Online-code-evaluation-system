@@ -11,6 +11,8 @@ import top.weiyuexin.mapper.UserMapper;
 import top.weiyuexin.pojo.User;
 import top.weiyuexin.service.UserService;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service.impl
  * @ProjectName: Online-code-evaluation-system
@@ -82,9 +84,17 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User> implements Us
         lqw.like(Strings.isNotEmpty(user.getUsername()), User::getUsername, user.getUsername());
         lqw.like(Strings.isNotEmpty(user.getEmail()), User::getEmail, user.getEmail());
         lqw.like(Strings.isNotEmpty(user.getSex()), User::getSex, user.getSex());
-        lqw.like(User::getIsAdmin, 0);
+        lqw.eq(User::getIsAdmin, 0);
         IPage<User> page = new Page<>(currentPage, pageSize);
         userMapper.selectPage(page, lqw);
         return page;
+    }
+
+    @Override
+    public List<User> indexRank(Integer num) {
+        LambdaQueryWrapper<User> lqw = new LambdaQueryWrapper<>();
+        lqw.orderByDesc(User::getSolvedNum);
+        lqw.last("limit " + num);
+        return userMapper.selectList(lqw);
     }
 }

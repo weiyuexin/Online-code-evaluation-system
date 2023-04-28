@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.User;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service
  * @ProjectName: Online-code-evaluation-system
@@ -24,4 +26,5 @@ public interface UserService extends IService<User> {
 
     IPage<User> rank(Integer currentPage, Integer pageSize, User user);
 
+    List<User> indexRank(Integer num);
 }

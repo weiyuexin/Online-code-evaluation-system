@@ -60,6 +60,17 @@ public class ProblemController {
     }
 
     /**
+     * 获取热门题目
+     *
+     * @return
+     */
+    @GetMapping("/hot")
+    public R hotProblems() {
+        List<Problem> problems = problemService.hotProblems(10);
+        return R.success(problems);
+    }
+
+    /**
      * 添加题目
      *
      * @param problem

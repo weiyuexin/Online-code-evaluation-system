@@ -93,7 +93,8 @@ const routes=[
         }
     },
     {
-        path: "/problem",
+        path: "/problem/:id",
+        name: "problem",
         component: Problem,
         meta:{
             title: "题目详情 - Online Judge - Henu"

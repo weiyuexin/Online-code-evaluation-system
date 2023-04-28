@@ -126,19 +126,10 @@ public class UserController {
      * 登录
      *
      * @param user 用户信息
-     * @param code 邮箱验证码
      * @return
      */
     @GetMapping("/login")
-    public R login(User user, String code, HttpServletResponse response) {
-        // 1、校验验证码是否正确
-        String emailCodeInRedis = redisTemplate.opsForValue().get("emailCode:" + user.getEmail());
-        if (emailCodeInRedis == null) {
-            return R.error("验证码已过期，请重新发送!");
-        }
-        if (!Objects.equals(emailCodeInRedis, code)) {
-            return R.error("验证码错误，请重试!");
-        }
+    public R login(User user, HttpServletResponse response) {
         // 2、校验用户名和密码是否正确
         user.setPassword(DigestUtil.md5Hex(user.getPassword()));
         User queriedUser = userService.getByNameAndPassword(user.getUsername(), user.getPassword());
@@ -156,7 +147,7 @@ public class UserController {
         if (!userService.updateById(queriedUser)) {
             return R.error("更新用户登录时间错误");
         }
-        return R.success("登录成功");
+        return R.success(queriedUser, "登录成功");
     }
 
 
@@ -181,7 +172,38 @@ public class UserController {
      */
     @PutMapping("")
     public R updateUser(User user) {
-        return R.success(userService.updateById(user));
+        if (user.getPassword() != null) {
+            user.setPassword(DigestUtil.md5Hex(user.getPassword()));
+        }
+        if (userService.updateById(user)) {
+            return R.success(user);
+        } else {
+            return R.error("修改失败");
+        }
+    }
+
+    /**
+     * 修改密码
+     *
+     * @param user
+     * @return
+     */
+    @PutMapping("/cwd")
+    public R changePass(User user, String newPassword) {
+        if (user.getPassword() != null) {
+            user.setPassword(DigestUtil.md5Hex(user.getPassword()));
+        }
+        System.out.println(user.toString());
+        System.out.println(newPassword);
+        User user1 = userService.getById(user.getId());
+        if (user1.getPassword().equals(user.getPassword())) {
+            //修改密码
+            user1.setPassword(DigestUtil.md5Hex(newPassword));
+            userService.updateById(user1);
+        } else {
+            return R.error("原密码错误");
+        }
+        return R.success(user1);
     }
 
     /**
@@ -192,5 +214,15 @@ public class UserController {
     @DeleteMapping("/{id}")
     public R deleteUser(@PathVariable("id") Integer id) {
         return R.success(userService.removeById(id), "删除成功");
+    }
+
+    /**
+     * 获取首页用户排行
+     *
+     * @return
+     */
+    @GetMapping("/top")
+    public R indexRank() {
+        return R.success(userService.indexRank(10));
     }
 }

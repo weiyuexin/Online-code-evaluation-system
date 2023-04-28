@@ -43,7 +43,6 @@ public class RunCodeController {
      */
     @PostMapping("/java")
     public R runJava(String code, Integer problemId, Integer userId) {
-
         // 获取用户信息
         User user = userService.getById(userId);
         user.setSubmitNum(user.getSubmitNum() + 1);
@@ -57,7 +56,6 @@ public class RunCodeController {
         evaluation.setCreateTime(Time.CurrentTime());
         evaluation.setLanguage("Java");
         evaluation.setPassedTestCaseNum(0);
-
         // 1、先将代码保存到服务器和数据库
         String UUID = IdUtil.simpleUUID();
         boolean b = FileUtils.WriteToFile(FilePath.JAVA.getPath() + problemId + "/" + UUID + "/" + "Main.java", code);
@@ -76,20 +74,18 @@ public class RunCodeController {
         // 2、编译代码
         R r = codeService.compileJava(code1);
         if (r.getCode() == 400) {
-            // 将错误信息记录
+            //编译发送错误
             evaluation.setError(r.getData().toString());
+            evaluation.setStatus("Compile Error");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            //编译发送错误
-            return r;
+            return R.error(evaluation, "编译失败");
         }
         // 3、运行代码，测试测试用例
-
         // 获取测试用例
         List<TestCase> testCaseList = testCaseService.getByProblemId(problemId);
         evaluation.setAllTestCaseNum(testCaseList.size());
-
         // 循环测试所有测试用例
         for (int i = 0; i < testCaseList.size(); i++) {
             r = codeService.runJava(code1, testCaseList.get(i));
@@ -100,23 +96,34 @@ public class RunCodeController {
             // 通过的用例数加一
             evaluation.setPassedTestCaseNum(evaluation.getPassedTestCaseNum() + 1);
         }
-
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
+            // 通过全部测评用例
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
+            //通过部分测评用例
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            //没有通过任何测评用例
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 
@@ -161,11 +168,12 @@ public class RunCodeController {
         if (r.getCode() == 400) {
             // 将错误信息记录
             evaluation.setError(r.getData().toString());
+            evaluation.setStatus("Compile Error");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             //编译发送错误
-            return r;
+            return R.error(evaluation, "编译失败");
         }
         // 3、运行代码，测试测试用例
         // 获取测试用例
@@ -183,20 +191,32 @@ public class RunCodeController {
         }
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
+            // 题目通过
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
+            //通过部分测评用例
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            //答案错误，没有通过任何测评用例
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 
@@ -242,11 +262,12 @@ public class RunCodeController {
         if (r.getCode() == 400) {
             // 将错误信息记录
             evaluation.setError(r.getData().toString());
+            evaluation.setStatus("Compile Error");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             //编译发送错误
-            return r;
+            return R.error(evaluation, "编译失败");
         }
         // 3、运行代码，测试测试用例
 
@@ -268,19 +289,28 @@ public class RunCodeController {
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 
@@ -342,19 +372,28 @@ public class RunCodeController {
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 
@@ -400,11 +439,12 @@ public class RunCodeController {
         if (r.getCode() == 400) {
             // 将错误信息记录
             evaluation.setError(r.getData().toString());
+            evaluation.setStatus("Compile Error");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             //编译发送错误
-            return r;
+            return R.error(evaluation, "编译失败");
         }
         // 3、运行代码，测试测试用例
 
@@ -426,19 +466,28 @@ public class RunCodeController {
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 
@@ -493,19 +542,28 @@ public class RunCodeController {
         // 4、判断所以测试用例是否已经全部通过
         if (evaluation.getPassedTestCaseNum() == evaluation.getAllTestCaseNum()) {
             evaluation.setIsPassed(1);
+            evaluation.setStatus("Accepted");
             user.setSolvedNum(user.getSolvedNum() + 1);
             problem.setSolvedNum(problem.getSolvedNum() + 1);
 
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
-            return R.success("通过");
-        } else {
+            return R.success(evaluation, "通过");
+        } else if (evaluation.getPassedTestCaseNum() > 0) {
             evaluation.setIsPassed(0);
+            evaluation.setStatus("Partial Accepted");
             evaluationService.save(evaluation);
             userService.updateById(user);
             problemService.updateById(problem);
             return R.error(evaluation, "测试用例未全部通过");
+        } else {
+            evaluation.setIsPassed(0);
+            evaluation.setStatus("Wrong Answer");
+            evaluationService.save(evaluation);
+            userService.updateById(user);
+            problemService.updateById(problem);
+            return R.error(evaluation, "答案错误");
         }
     }
 }

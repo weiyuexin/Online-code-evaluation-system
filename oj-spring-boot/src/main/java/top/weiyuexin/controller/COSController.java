@@ -1,17 +1,17 @@
 package top.weiyuexin.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import top.weiyuexin.pojo.vo.F;
 import top.weiyuexin.pojo.vo.R;
 import top.weiyuexin.service.COSService;
 
-import javax.servlet.http.HttpSession;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @PackageName: top.weiyuexin.controller
@@ -25,21 +25,35 @@ import javax.servlet.http.HttpSession;
 public class COSController {
     @Autowired
     private COSService cosService;
+
     /**
      * 上传文件到腾讯云cos接口
+     *
      * @param file
-     * @param session
      * @return
      */
     @PostMapping(value = "/cos/upload")
     @ResponseBody
-    public Object Upload(@RequestParam(value = "file") MultipartFile file){
+    public F Upload(@RequestParam(value = "file") MultipartFile file) {
         //判断文件是否为空
-        if(file == null){
-            return R.error("图片不能为空");
-        }else {
-            //返回的类型是
-            return cosService.upload(file);
+        F f = new F();
+        if (file == null) {
+            return f;
+        } else {
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("alt", file.getOriginalFilename());
+            R r = cosService.upload(file);
+            if (r.getCode() == 200) {//上传成功
+                f.setErrno(0);
+                map.put("url", r.getData());
+                map.put("href", r.getData());
+                f.setData(map);
+            } else {
+                f.setErrno(1);
+                f.setData("错误");
+            }
         }
+        return f;
     }
 }

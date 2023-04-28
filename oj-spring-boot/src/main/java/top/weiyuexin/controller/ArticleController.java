@@ -10,6 +10,7 @@ import top.weiyuexin.pojo.vo.W;
 import top.weiyuexin.service.ArticleService;
 import top.weiyuexin.service.UserService;
 import top.weiyuexin.utils.OutHtml;
+import top.weiyuexin.utils.Time;
 
 import java.util.List;
 
@@ -36,8 +37,13 @@ public class ArticleController {
      * @return
      */
     @GetMapping("/{id}")
-    public R getById(@PathVariable("id") String id) {
-        return R.success(articleService.getById(id));
+    public R getById(@PathVariable("id") Integer id) {
+        Article article = articleService.getById(id);
+        article.setReadNum(article.getReadNum() + 1);
+        articleService.updateById(article);
+        User user = userService.getById(article.getAuthorId());
+        article.setAuthorName(user.getUsername());
+        return R.success(article);
     }
 
 
@@ -56,8 +62,8 @@ public class ArticleController {
             String content = articles.get(i).getContent();
             OutHtml outHtml = new OutHtml();
             content = outHtml.delHTMLTag(content);
-            if (content.length() > 160) {
-                content = content.substring(0, 160);
+            if (content.length() > 100) {
+                content = content.substring(0, 100);
             }
             articles.get(i).setContent(content);
             //根据作者id查询作者
@@ -79,6 +85,7 @@ public class ArticleController {
      */
     @PostMapping("")
     public R addArticle(Article article) {
+        article.setTime(Time.CurrentTime());
         return R.success(articleService.save(article));
     }
 

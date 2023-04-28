@@ -11,6 +11,7 @@ import Login from "@/views/oj/user/Login.vue";
 import UserPanel from "@/views/oj/user/UserPanel.vue";
 import Problem from "@/views/oj/problem/Problem.vue";
 import EditArticle from "@/views/oj/article/EditArticle.vue";
+import Article from "@/views/oj/article/Article.vue";
 
 const routerHistory = createWebHistory()
 
@@ -105,6 +106,14 @@ const routes=[
         component: EditArticle,
         meta:{
             title: "编辑文章 - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/article/:id",
+        name: "article",
+        component: Article,
+        meta:{
+            title: "文章详情页 - Online Judge - Henu"
         }
     },
 ]

@@ -10,27 +10,37 @@
           <el-table-column
               type="index"
               label="Rank"
-              width="80">
+              width="100">
           </el-table-column>
           <el-table-column
-              prop="title"
+              prop="username"
               label="用户名"
-              width="200">
+              width="130">
             <template v-slot="scope">
               <el-link :href="scope.row.url" type="primary" target="_blank">{{
-                  scope.row.name
+                  scope.row.username
                 }}
               </el-link>
             </template>
           </el-table-column>
 
           <el-table-column
-              prop="solve_num"
+              prop="submitNum"
+              label="提交次数">
+          </el-table-column>
+          <el-table-column
+              prop="solvedNum"
               label="通过题数">
           </el-table-column>
           <el-table-column
               prop="passRate"
               label="通过率">
+            <template v-slot="scope">
+              <span v-if="scope.row.submitNum===0">0</span>
+              <span v-if="scope.row.submitNum>0">
+                      {{ ((scope.row.solvedNum / scope.row.submitNum) * 100).toFixed(2) }}%
+                    </span>
+            </template>
           </el-table-column>
         </el-table>
       </el-main>
@@ -39,39 +49,34 @@
 </template>
 
 <script>
+import axios from "axios";
+import {ElMessage} from "element-plus";
+
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Rank",
   data() {
     return {
-      rank: [{
-        id: '23',
-        name: 'weiyuexin',
-        introduction: 'hello wyyy',
-        submit_num: 899,
-        solve_num: 555,
-        passRate: '78%',
-      }, {
-        id: '2',
-        name: 'wyx',
-        introduction: '你好，我来自henu',
-        submit_num: 455,
-        solve_num: 102,
-        passRate: '25%',
-      }, {
-        id: '8',
-        name: 'www',
-        introduction: 'hello,vue',
-        submit_num: 100,
-        solve_num: 12,
-        passRate: '12%',
-      } ]
+      rank: []
     };
   },
   methods:{
     getIndexRank(){
-
+      axios.get("/api/user/top" ).then(response => {
+        if (response.data.code === 200) {
+          this.rank = response.data.data
+        }
+      }).catch(error => {
+        ElMessage({
+          message: '后端接口错误',
+          type: 'warning',
+        })
+        console.log(error);
+      })
     }
+  },
+  mounted() {
+    this.getIndexRank()
   }
 }
 </script>

@@ -60,7 +60,8 @@
 
 // import axios from "axios";
 import {ElMessage} from "element-plus";
-
+import axios from "axios";
+import Cookies from 'js-cookie'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Login",
@@ -74,12 +75,55 @@ export default {
   },
   components: {},
   methods: {
-    login: () => {
-      console.log(this.user.username)
-      ElMessage({
-        message: '登录成功',
-        type: 'success',
+    login() {
+      if (this.user.username === "") {
+        ElMessage({
+          message: '用户名不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      if (this.user.password === "") {
+        ElMessage({
+          message: '密码不能为空',
+          type: 'warning',
+        })
+        return
+      }
+      axios.get("/api/user/login", {
+        params: {
+          username: this.user.username,
+          password: this.user.password
+        }
       })
+          .then(response => {
+            console.log(response.data)
+            if (response.data.code === 200) {
+              ElMessage({
+                message: '登录成功',
+                type: 'success',
+              })
+              //写入cookie
+
+              Cookies.set('user', JSON.stringify(response.data.data),'7d')
+              //跳转到首页
+              window.setTimeout(function () {
+                location.href = "/";
+              }, 2000);
+            } else {
+              ElMessage({
+                message: response.data.msg,
+                type: 'error',
+              })
+            }
+          })
+          .catch(error => {
+            ElMessage({
+              message: '登录失败',
+              type: 'warning',
+            })
+            console.log(error);
+          })
     }
   },
 }

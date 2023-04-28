@@ -67,7 +67,7 @@
 <script>
 import {ElMessage} from 'element-plus'
 import axios from "axios";
-
+import qs from 'qs'
 export default {
   // eslint-disable-next-line vue/multi-word-component-names
   name: "Register",
@@ -120,20 +120,21 @@ export default {
         })
         return
       }
-      axios.post("/api/user/register", {
+      let postData = qs.stringify({
         username: this.user.username,
         email: this.user.email,
         code: this.user.emailCode,
         password: this.user.password
       })
+      axios.post("/api/user/register", postData)
           .then(response => {
             console.log(response.data)
-            if (response.data.code===200){
+            if (response.data.code === 200) {
               ElMessage({
                 message: '注册成功',
                 type: 'success',
               })
-            }else {
+            } else {
               ElMessage({
                 message: response.data.msg,
                 type: 'error',

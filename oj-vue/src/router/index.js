@@ -12,6 +12,7 @@ import UserPanel from "@/views/oj/user/UserPanel.vue";
 import Problem from "@/views/oj/problem/Problem.vue";
 import EditArticle from "@/views/oj/article/EditArticle.vue";
 import Article from "@/views/oj/article/Article.vue";
+import Contest from "@/views/oj/contest/Contest.vue";
 
 const routerHistory = createWebHistory()
 
@@ -114,6 +115,14 @@ const routes=[
         component: Article,
         meta:{
             title: "文章详情页 - Online Judge - Henu"
+        }
+    },
+    {
+        path: "/contest/:id",
+        name: "contest",
+        component: Contest,
+        meta:{
+            title: "竞赛详情页 - Online Judge - Henu"
         }
     },
 ]

@@ -4,8 +4,10 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import top.weiyuexin.pojo.Contest;
+import top.weiyuexin.pojo.ContestProblem;
 import top.weiyuexin.pojo.vo.R;
 import top.weiyuexin.pojo.vo.W;
+import top.weiyuexin.service.ContestProblemService;
 import top.weiyuexin.service.ContestService;
 import top.weiyuexin.service.ProblemService;
 import top.weiyuexin.service.UserService;
@@ -30,6 +32,8 @@ public class ContestController {
     private ProblemService problemService;
     @Autowired
     private ContestService contestService;
+    @Autowired
+    private ContestProblemService contestProblemService;
 
     /**
      * 根据id查看竞赛
@@ -63,6 +67,16 @@ public class ContestController {
 
         Ipage.setRecords(contests);
         return new W(0, (int) Ipage.getTotal(), Ipage.getRecords());
+    }
+
+    @GetMapping("/problem/list/{contestId}")
+    public R getContestProblems(@PathVariable("contestId") Integer contestId) {
+        List<ContestProblem> problems = contestProblemService.getByContestId(contestId);
+        for (int i = 0; i < problems.size(); i++) {
+            problems.get(i).setProblemName(problemService.getById(problems.get(i).getProblemId()).getTitle());
+            problems.get(i).setContestName(contestService.getById(problems.get(i).getContestId()).getName());
+        }
+        return R.success(problems);
     }
 
     /**

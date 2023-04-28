@@ -13,7 +13,7 @@
                 <el-col :span="4" class="search">
                   <el-input
                       size="large"
-                      placeholder="请输入用户名以搜索"
+                      placeholder="请输入竞赛名以搜索"
                       v-model="keyword">
                     <template #suffix>
                       <el-icon @click="goToSearch" class="el-input__icon">
@@ -26,45 +26,48 @@
             </el-col>
             <el-col :span="24">
               <el-table class="rank"
-                        :data="rank"
+                        :data="contests"
                         stripe
                         style="width: 100%">
                 <el-table-column
-                    type="index"
-                    label="Rank"
+                    prop="id"
+                    label="编号"
                     width="100">
                 </el-table-column>
                 <el-table-column
                     prop="username"
-                    label="用户名"
-                    width="200">
+                    label="竞赛名"
+                    width="400">
                   <template v-slot="scope">
-                    <el-link :href="scope.row.url" type="primary" target="_blank">{{
-                        scope.row.username
+                    <router-link :to="{ name: 'contest', params: { id: scope.row.id } }"><el-link :href="scope.row.url" type="primary" target="_blank">{{
+                        scope.row.name
                       }}
-                    </el-link>
+                    </el-link></router-link>
                   </template>
                 </el-table-column>
                 <el-table-column
-                    prop="introduction"
-                    label="个人简介">
+                    prop="startTime"
+                    label="开始时间">
                 </el-table-column>
                 <el-table-column
-                    prop="submitNum"
-                    label="提交次数">
+                    prop="endTime"
+                    label="结束时间">
                 </el-table-column>
                 <el-table-column
-                    prop="solvedNum"
-                    label="通过题数">
+                    prop="num"
+                    label="参赛人数">
                 </el-table-column>
                 <el-table-column
-                    prop="passRate"
-                    label="通过率">
+                    prop="status"
+                    label="竞赛状态">
+                </el-table-column>
+                <el-table-column
+                    label="操作">
                   <template v-slot="scope">
-                    <span v-if="scope.row.submitNum===0">0</span>
-                    <span v-if="scope.row.submitNum>0">
-                      {{ ((scope.row.solvedNum / scope.row.submitNum) * 100).toFixed(2) }}%
-                    </span>
+                    <el-button type="primary" v-if="scope.row.status==='未开始'" @click="apply(scope.row.id)">报名</el-button>
+                    <el-button type="primary" disabled v-if="scope.row.status==='进行中'">报名</el-button>
+                    <el-button type="primary" disabled v-if="scope.row.status==='已结束'">报名</el-button>
+
                   </template>
                 </el-table-column>
               </el-table>
@@ -94,6 +97,8 @@ import NavBar from "@/components/oj/common/NavBar.vue";
 import Footer from "@/components/oj/common/Footer";
 import {ElMessage} from 'element-plus'
 import axios from "axios";
+import Cookies from "js-cookie";
+import qs from "qs";
 export default {
   name: "ContestList",
   data() {
@@ -102,7 +107,8 @@ export default {
       currentPage: 1,
       pageSize: 10,
       total: 0,
-      rank: []
+      contests: [],
+      user: {},
     };
   },
   components: {
@@ -122,9 +128,9 @@ export default {
       this.getPage()
     },
     getPage() {
-      axios.get("/api/user/rank?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
+      axios.get("/api/contest/list?limit=" + this.pageSize + "&page=" + this.currentPage, {}).then(response => {
         if (response.data.code === 0) {
-          this.rank = response.data.data
+          this.contests = response.data.data
           this.total = response.data.count
         }
       }).catch(error => {
@@ -144,6 +150,48 @@ export default {
       } else {
         //进行搜索
       }
+    },
+    getUser() {
+      // console.log(JSON.parse(Cookies.get('user'))!==null)
+      //const user = JSON.parse(Cookies.get('user'))
+      const user = Cookies.get('user')
+      this.user = JSON.parse(user)
+    },
+    apply(contestId){
+      this.getUser()
+      if (JSON.stringify(this.user) === '{}') {
+        ElMessage({
+          type: 'info',
+          message: '请先登录',
+        })
+        return
+      }
+      let postData = qs.stringify({
+        contestId: contestId,
+        userId: this.user.id
+      })
+      axios.post("/api/contest/apply", postData)
+          .then(response => {
+            this.status = response.data.data.status
+            if (response.data.code === 200) {
+              ElMessage({
+                message: '通过',
+                type: 'success',
+              })
+            } else {
+              ElMessage({
+                message: response.data.msg,
+                type: 'warning',
+              })
+            }
+          })
+          .catch(error => {
+            ElMessage({
+              message: '提交失败',
+              type: 'warning',
+            })
+            console.log(error);
+          });
     }
   }
 }

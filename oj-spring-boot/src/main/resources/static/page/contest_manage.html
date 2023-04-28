@@ -54,7 +54,7 @@
         </script>
         <script type="text/html" id="currentTableBar">
             <!--            <a class="layui-btn layui-btn-warm layui-btn-xs data-count-view" lay-event="view">预览</a>-->
-            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">测试用例管理</a>
+            <a class="layui-btn layui-btn-normal layui-btn-xs data-count-edit" lay-event="edit">题目管理</a>
             <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
         </script>
 
@@ -142,13 +142,13 @@
         table.on('toolbar(currentTableFilter)', function (obj) {
             if (obj.event === 'add') {  // 监听添加操作
                 var index = layer.open({
-                    title: '上传图片',
+                    title: '创建竞赛',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/add_image.html',
+                    content: '../page/table/add_contest.html',
                 });
                 $(window).on("resize", function () {
                     layer.full(index);
@@ -192,13 +192,18 @@
             if (obj.event === 'edit') {
 
                 var index = layer.open({
-                    title: '编辑用户',
+                    title: '题目管理',
                     type: 2,
                     shade: 0.2,
                     maxmin: true,
                     shadeClose: true,
                     area: ['100%', '100%'],
-                    content: '../page/table/edit.html',
+                    content: '../page/table/contest_problem_manage.html',
+                    success: function (layero, index) {
+                        var iframe = window['layui-layer-iframe' + index];
+                        //调用子页面的全局函数，向子页面传递参数
+                        iframe.child(data);
+                    }
                 });
                 $(window).on("resize", function () {
                     layer.full(index);

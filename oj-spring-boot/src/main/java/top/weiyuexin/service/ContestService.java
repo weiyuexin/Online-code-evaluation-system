@@ -4,6 +4,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import top.weiyuexin.pojo.Contest;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service
  * @ProjectName: oj-spring-boot
@@ -14,4 +16,6 @@ import top.weiyuexin.pojo.Contest;
  */
 public interface ContestService extends IService<Contest> {
     IPage<Contest> getPage(Integer currentPage, Integer pageSize, Contest contest);
+
+    List<Contest> getAllNewContest();
 }

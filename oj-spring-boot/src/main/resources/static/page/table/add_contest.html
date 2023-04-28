@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>创建题目</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../lib/layui-v2.6.3/css/layui.css" media="all">
+    <link rel="stylesheet" href="../../css/public.css" media="all">
+    <style>
+        body {
+            background-color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+<div class="layui-form layuimini-form">
+    <div class="layui-form-item">
+        <label class="layui-form-label required">竞赛名称</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="required" lay-reqtext="题目名称不能为空"
+                   placeholder="请输入题目名称" value="" class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">开始时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="startTime" id="test1">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label required">结束时间</label>
+        <div class="layui-input-block">
+            <input type="text" class="layui-input" name="endTime" id="test2">
+        </div>
+    </div>
+
+
+    <div class="layui-form-item">
+        <div class="layui-input-block">
+            <button class="layui-btn layui-btn-normal" lay-submit lay-filter="saveBtn">确认添加</button>
+        </div>
+    </div>
+</div>
+<script src="../../lib/layui-v2.6.3/layui.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'laydate'], function () {
+        var form = layui.form,
+            layer = layui.layer,
+            $ = layui.$;
+
+        var laydate = layui.laydate;
+        let startTime = ""
+        let endTime = ""
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#test1' //指定元素
+            , type: 'datetime'
+            , done: function (value) {
+                startTime = value
+                console.log(startTime); //得到日期生成的值，如：2017-08-18
+            }
+        });
+        laydate.render({
+            elem: '#test2' //指定元素
+            , type: 'datetime'
+            , done: function (value) {
+                endTime = value
+                console.log(endTime); //得到日期生成的值，如：2017-08-18
+            }
+        });
+
+
+        //监听提交
+        form.on('submit(saveBtn)', function (data) {
+            var title = data.field.title;
+
+
+            $.ajax({
+                url: "/contest",//请求地址
+                dataType: "json",//数据格式
+                type: "POST",//请求方式
+                async: false,//是否异步请求
+                data: {
+                    "name": title,
+                    "startTime": startTime,
+                    "endTime": endTime,
+                },
+                success: function (data) {   //如何发送成功
+                    if (data.code === 200) {
+                        layer.msg(data.msg);
+                    } else {
+                        layer.msg("创建失败");
+                    }
+                },
+                error: function (data) {
+                    layer.msg("服务器异常，请联系管理员!");
+                }
+            })
+
+
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -95,7 +95,7 @@ export default {
   },
   methods: {
     handleEnd () {
-      this.$Message.info('倒计时结束');
+      this.$Message.info('比赛结束');
     },
     getContest(){
       axios.get("/api/contest/"+this.contestId).then(response => {

@@ -18,6 +18,6 @@ import java.util.List;
 public interface ProblemService extends IService<Problem> {
 
     IPage<Problem> getPage(Integer currentPage, Integer pageSize, Problem problem);
-
+    
     List<Problem> hotProblems(Integer num);
 }

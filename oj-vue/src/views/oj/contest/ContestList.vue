@@ -170,12 +170,11 @@ export default {
         contestId: contestId,
         userId: this.user.id
       })
-      axios.post("/api/contest/apply", postData)
+      axios.post("/api/contest/user/apply", postData)
           .then(response => {
-            this.status = response.data.data.status
             if (response.data.code === 200) {
               ElMessage({
-                message: '通过',
+                message: '报名成功',
                 type: 'success',
               })
             } else {
@@ -187,7 +186,7 @@ export default {
           })
           .catch(error => {
             ElMessage({
-              message: '提交失败',
+              message: '报名失败',
               type: 'warning',
             })
             console.log(error);

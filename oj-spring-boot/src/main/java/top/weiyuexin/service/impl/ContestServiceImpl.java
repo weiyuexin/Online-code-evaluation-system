@@ -11,6 +11,8 @@ import top.weiyuexin.mapper.ContestMapper;
 import top.weiyuexin.pojo.Contest;
 import top.weiyuexin.service.ContestService;
 
+import java.util.List;
+
 /**
  * @PackageName: top.weiyuexin.service.impl
  * @ProjectName: oj-spring-boot
@@ -34,5 +36,18 @@ public class ContestServiceImpl extends ServiceImpl<ContestMapper, Contest> impl
         IPage<Contest> page = new Page<>(currentPage, pageSize);
         contestMapper.selectPage(page, lqw);
         return page;
+    }
+
+    /**
+     * 获取所有未开始的竞赛
+     *
+     * @return
+     */
+    @Override
+    public List<Contest> getAllNewContest() {
+        LambdaQueryWrapper<Contest> lqw = new LambdaQueryWrapper<>();
+        lqw.like(Contest::getStatus, "未开始");
+        List<Contest> contests = contestMapper.selectList(lqw);
+        return contests;
     }
 }

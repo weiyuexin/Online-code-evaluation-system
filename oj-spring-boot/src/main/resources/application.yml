@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://8.130.99.217:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://localhost:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
     password: weiyuexin
     type: com.alibaba.druid.pool.DruidDataSource
@@ -12,7 +12,7 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   redis:
-    host: 8.130.99.217
+    host: 127.0.0.1
     port: 6379
     password: weiyuexin
     lettuce:
@@ -39,11 +39,10 @@ spring:
     pathmatch:
       matching-strategy: ant_path_matcher
   tencent:
-    secretId: AKIDmrqa3HIiFj3xmQozwe7LK4Zp8QWN3dz5
-    secretKey: 1qlUzIOJ8j4FH7hCUX9jGcjaDblgQvQh
+    secretId: AKID
+    secretKey: 1qlUzIOJ8
     bucket: ap-beijing
-    bucketName: wyx-1303917755
-#    path: https://wyx-1303917755.cos.ap-beijing.myqcloud.com
+    bucketName: wyx-130
     path: https://img.weiyuexin.top
     qianzui: img
     qianzui-file: file

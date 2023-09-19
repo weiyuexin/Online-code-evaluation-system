@@ -137,11 +137,11 @@ System Error：系统错误。在进行代码测评时，测评机器发送错�
 
 管理员是系统中唯一可以对竞赛进行管理的角色。竞赛管理包括查看、创建和删除等操作。创建竞赛时需要设定竞赛的开始和结束时间。竞赛管理页面如图所示。
 
-![img](file:///C:/Users/30224/AppData/Local/Temp/msohtmlclip1/01/clip_image018.jpg)
+![img](./images/clip_image018.jpg)
 
 5) 文章管理
 
 管理员可以对文章进行管理。实现了查看文章列表、删除文章等功能。文章管理页面如图所示。
 
-![img](file:///C:/Users/30224/AppData/Local/Temp/msohtmlclip1/01/clip_image020.jpg)
+![img](./images/clip_image020.jpg)
 

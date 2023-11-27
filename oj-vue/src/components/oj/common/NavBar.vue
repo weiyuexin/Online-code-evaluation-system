@@ -95,8 +95,8 @@ export default {
     check() {
       // console.log(JSON.parse(Cookies.get('user'))!==null)
       //const user = JSON.parse(Cookies.get('user'))
-      const user = Cookies.get('user')
-      this.user = JSON.parse(user)
+      // const user = Cookies.get('user')
+      // this.user = JSON.parse(user)
     },
     logout(){
       Cookies.remove('user')
@@ -135,12 +135,15 @@ export default {
   z-index: 1000;
   width: 100%;
   height: 60px;
+  background-color: white;
   border-bottom: solid 1px #EFF3F5;
+  padding-left: 5%;
 }
 .oj-navbar {
-  width: 95%;
+  width: 85%;
   z-index: 999;
   float: left;
+  margin-left: 3%;
 }
 
 .logo {
@@ -181,7 +184,7 @@ export default {
 }
 
 .el-menu--horizontal > .el-menu-item {
-  width: 110px;
+  width: 100px;
   font-size: 15px;
   text-align: center;
 }

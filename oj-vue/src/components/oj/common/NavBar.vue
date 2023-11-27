@@ -1,8 +1,8 @@
 <template>
   <div class="nav">
+    <router-link :to="`/`" ><img src="@/assets/logo.png" class="logoImg"/></router-link>
     <el-menu :default-active="activeIndex" router active-text-color="#409EFF" class="oj-navbar" mode="horizontal"
              @select="handleSelect">
-      <el-menu-item index="/logo" class="logo"><img src="@/assets/logo_henu.png"/></el-menu-item>
       <el-menu-item index="/">
         <el-icon>
           <HomeFilled/>
@@ -125,18 +125,32 @@ export default {
   align-items: center;
   font-size: 18px;
 }
+.el-menu-item:hover{
+  background-color: white!important;
+}
 
-.oj-navbar {
+.nav{
   position: fixed;
-  width: 100%;
   top: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 60px;
   border-bottom: solid 1px #EFF3F5;
+}
+.oj-navbar {
+  width: 95%;
   z-index: 999;
-  box-shadow: 0 1px 5px 0 rgb(0 0 0 / 10%);
+  float: left;
 }
 
 .logo {
   width: 130px !important;
+}
+.logoImg{
+  height: 60px;
+  width: 5%;
+  float: left;
+  background-color: white;
 }
 
 .register {

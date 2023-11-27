@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-scrollbar height="710px">
+    <el-scrollbar height="1000px" class="scrollbar">
       <NavBar :active="`/about`"></NavBar>
       <div class="content">
         <el-row>
@@ -87,7 +87,7 @@
                     </el-col>
                     <el-col span="24">
                       <el-tag
-                          type=""
+                          type="success"
                           effect="dark">
                         Partial Accepted
                       </el-tag>&nbsp;:&nbsp;通过部分测试用例。
@@ -171,6 +171,10 @@ export default {
 </script>
 
 <style scoped>
+.scrollbar {
+  background-color: #EFF3F5;
+}
+
 .content {
   padding-left: 40px;
   padding-right: 40px;

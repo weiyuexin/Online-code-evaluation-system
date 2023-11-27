@@ -124,6 +124,14 @@ const routes = [
             title: "竞赛详情页 - Online Judge - Henu"
         }
     },
+    {
+        path: '/404',
+        name: 'not-found',
+        component: () => import('../views/oj/404/404.vue'),
+        hidden: true
+    },
+    // 404 page must be placed at the end !!!
+    { path: '/:catchAll(.*)', redirect: '/404', hidden: true }
 ]
 const router = createRouter({
     history: routerHistory,

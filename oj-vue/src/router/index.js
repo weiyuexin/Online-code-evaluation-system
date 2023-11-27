@@ -1,4 +1,4 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {createRouter, createWebHistory} from 'vue-router'
 import Main from '../views/oj/Main'
 import ProblemList from "@/views/oj/problem/ProblemList.vue";
 import ContestList from "@/views/oj/contest/ContestList";
@@ -17,8 +17,7 @@ import Contest from "@/views/oj/contest/Contest.vue";
 const routerHistory = createWebHistory()
 
 
-
-const routes=[
+const routes = [
     {
         path: "/logo",
         redirect: "/"
@@ -27,8 +26,8 @@ const routes=[
         name: "main",
         path: '/',
         component: Main,
-        meta:{
-            title: "Home - Online Judge - Henu"
+        meta: {
+            title: "Home - Online Judge - Henu",
         }
     },
     {
@@ -41,56 +40,56 @@ const routes=[
     {
         path: "/contest",
         component: ContestList,
-        meta:{
+        meta: {
             title: "Contest - Online Judge - Henu"
         }
     },
     {
         path: "/status",
         component: Status,
-        meta:{
+        meta: {
             title: "Status - Online Judge - Henu"
         }
     },
     {
         path: "/rank",
         component: Rank,
-        meta:{
+        meta: {
             title: "Rank - Online Judge - Henu"
         }
     },
     {
         path: "/blog",
         component: Blog,
-        meta:{
+        meta: {
             title: "Blog - Online Judge - Henu"
         }
     },
     {
         path: "/about",
         component: About,
-        meta:{
+        meta: {
             title: "About - Online Judge - Henu"
         }
     },
     {
         path: "/login",
         component: Login,
-        meta:{
+        meta: {
             title: "Login - Online Judge - Henu"
         }
     },
     {
         path: "/register",
         component: Register,
-        meta:{
+        meta: {
             title: "Register - Online Judge - Henu"
         }
     },
     {
         path: "/user",
         component: UserPanel,
-        meta:{
+        meta: {
             title: "我的 - Online Judge - Henu"
         }
     },
@@ -98,14 +97,14 @@ const routes=[
         path: "/problem/:id",
         name: "problem",
         component: Problem,
-        meta:{
+        meta: {
             title: "题目详情 - Online Judge - Henu"
         }
     },
     {
         path: "/article/edit",
         component: EditArticle,
-        meta:{
+        meta: {
             title: "编辑文章 - Online Judge - Henu"
         }
     },
@@ -113,7 +112,7 @@ const routes=[
         path: "/article/:id",
         name: "article",
         component: Article,
-        meta:{
+        meta: {
             title: "文章详情页 - Online Judge - Henu"
         }
     },
@@ -121,7 +120,7 @@ const routes=[
         path: "/contest/:id",
         name: "contest",
         component: Contest,
-        meta:{
+        meta: {
             title: "竞赛详情页 - Online Judge - Henu"
         }
     },

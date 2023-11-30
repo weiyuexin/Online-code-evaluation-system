@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://116.222.21.125:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
     password: weiyuexin
     type: com.alibaba.druid.pool.DruidDataSource
@@ -12,7 +12,7 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   redis:
-    host: 127.0.0.1
+    host: 116.222.21.125
     port: 6379
     password: weiyuexin
     lettuce:
@@ -46,6 +46,17 @@ spring:
     path: https://img.weiyuexin.top
     qianzui: img
     qianzui-file: file
+
+logging:
+  pattern:
+    dateformat: yyyy-MM-dd HH:mm:ss.SSS
+  file:
+    name: ./log/onlineoj.log
+  logback:
+    rollingpolicy: # 持久化
+      file-name-pattern: ${LOG_FILE}.%d{yyyy-MM-dd}.%i.gz
+      max-file-size: 1MB
+
 mybatis-plus:
   global-config:
     db-config:

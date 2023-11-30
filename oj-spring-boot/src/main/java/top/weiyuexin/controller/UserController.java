@@ -2,6 +2,7 @@ package top.weiyuexin.controller;
 
 import cn.hutool.crypto.digest.DigestUtil;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.web.bind.annotation.*;
@@ -30,6 +31,7 @@ import java.util.concurrent.TimeUnit;
 
 @RestController
 @RequestMapping("/user")
+@Slf4j
 public class UserController {
     @Autowired
     private UserService userService;
@@ -48,6 +50,7 @@ public class UserController {
     @GetMapping("/{id}")
     @ResponseBody
     public R getById(@PathVariable("id") Integer id) {
+        log.info("查询id为" + id + "的用户信息。");
         return R.success(userService.getById(id));
     }
 

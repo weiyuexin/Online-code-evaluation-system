@@ -1,7 +1,6 @@
 package top.weiyuexin.cron;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import top.weiyuexin.pojo.Contest;
 import top.weiyuexin.service.ContestService;
@@ -17,7 +16,7 @@ public class ContestCron {
     @Autowired
     private ContestService contestService;
 
-    @Scheduled(fixedRate = 1000)
+    //    @Scheduled(fixedRate = 1000)
     public void updateContestStatus() throws ParseException {
         List<Contest> contests = contestService.getAllNewContest();
         for (int i = 0; i < contests.size(); i++) {

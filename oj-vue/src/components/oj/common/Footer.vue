@@ -8,7 +8,7 @@
       </el-col>
       <el-col :span="8">
         <div class="link">
-          Copyright &nbsp;© &nbsp;2023 &nbsp;<a href="http://github.com/weiyuexin" target="_blank" class="author-link">Ginkgo</a>
+          Copyright &nbsp;© &nbsp;2023 &nbsp;<a href="http://github.com/weiyuexin" target="_blank" class="author-link">壹零柒科技工作室</a>
         </div>
       </el-col>
       <el-col :span="8">

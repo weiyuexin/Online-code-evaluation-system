@@ -1,9 +1,9 @@
 server:
-  port: 8080
+  port: 8081
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://116.222.21.125:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
+    url: jdbc:mysql://116.204.21.236:3306/onlineoj?useUnicode=true&characterEncoding=UTF-8&useJDBC49CompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2B8
     username: root
     password: weiyuexin
     type: com.alibaba.druid.pool.DruidDataSource
@@ -12,9 +12,9 @@ spring:
       max-request-size: 100MB
       max-file-size: 100MB
   redis:
-    host: 116.222.21.125
+    host: 116.204.21.236
     port: 6379
-    password: weiyuexin
+    password: jhkdjhkjdhsIUTYURTU_7wJGzx
     lettuce:
       pool:
         # 最大阻塞等待时间，负数表示没有限制
@@ -46,6 +46,11 @@ spring:
     path: https://img.weiyuexin.top
     qianzui: img
     qianzui-file: file
+  qiniu:
+    accessKey: ak # 公钥
+    secretKey: sk # 私钥
+    bucketName: weiyuexin  #存储空间名称
+    path: https://qiniu.weiyuexin.top
 
 logging:
   pattern:

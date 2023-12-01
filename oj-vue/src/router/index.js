@@ -27,70 +27,70 @@ const routes = [
         path: '/',
         component: Main,
         meta: {
-            title: "Home - Online Judge - Henu",
+            title: "Home - Online Judge",
         }
     },
     {
         path: "/problems",
         component: ProblemList,
         meta: {
-            title: 'Problems - Online Judge - Henu',
+            title: 'Problems - Online Judge',
         }
     },
     {
         path: "/contest",
         component: ContestList,
         meta: {
-            title: "Contest - Online Judge - Henu"
+            title: "Contest - Online Judge"
         }
     },
     {
         path: "/status",
         component: Status,
         meta: {
-            title: "Status - Online Judge - Henu"
+            title: "Status - Online Judge"
         }
     },
     {
         path: "/rank",
         component: Rank,
         meta: {
-            title: "Rank - Online Judge - Henu"
+            title: "Rank - Online Judge"
         }
     },
     {
         path: "/blog",
         component: Blog,
         meta: {
-            title: "Blog - Online Judge - Henu"
+            title: "Blog - Online Judge"
         }
     },
     {
         path: "/about",
         component: About,
         meta: {
-            title: "About - Online Judge - Henu"
+            title: "About - Online Judge"
         }
     },
     {
         path: "/login",
         component: Login,
         meta: {
-            title: "Login - Online Judge - Henu"
+            title: "Login - Online Judge"
         }
     },
     {
         path: "/register",
         component: Register,
         meta: {
-            title: "Register - Online Judge - Henu"
+            title: "Register - Online Judge"
         }
     },
     {
         path: "/user",
         component: UserPanel,
         meta: {
-            title: "我的 - Online Judge - Henu"
+            title: "我的 - Online Judge"
         }
     },
     {
@@ -98,14 +98,14 @@ const routes = [
         name: "problem",
         component: Problem,
         meta: {
-            title: "题目详情 - Online Judge - Henu"
+            title: "题目详情 - Online Judge"
         }
     },
     {
         path: "/article/edit",
         component: EditArticle,
         meta: {
-            title: "编辑文章 - Online Judge - Henu"
+            title: "编辑文章 - Online Judge"
         }
     },
     {
@@ -113,7 +113,7 @@ const routes = [
         name: "article",
         component: Article,
         meta: {
-            title: "文章详情页 - Online Judge - Henu"
+            title: "文章详情页 - Online Judge"
         }
     },
     {
@@ -121,7 +121,7 @@ const routes = [
         name: "contest",
         component: Contest,
         meta: {
-            title: "竞赛详情页 - Online Judge - Henu"
+            title: "竞赛详情页 - Online Judge"
         }
     },
     {
